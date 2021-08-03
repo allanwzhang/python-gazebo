@@ -8,7 +8,6 @@ import pandas as pd
 import numpy as np
 import math
 from .motor import Motor
-from filterpy.kalman import UnscentedKalmanFilter, MerweScaledSigmaPoints
 import time
 
 def hx(x):
@@ -38,10 +37,9 @@ class OctorotorBaseEnv(gym.Env):
         self.state = self.octorotor.get_state()
         self.xref = 0
         self.yref = 0
-        #self.xrefarr = pd.read_csv("~/gymfc/scripts/Controllers/Paths/EpathX5.csv", header=None).iloc[:, 1]
-        #self.yrefarr = pd.read_csv("~/gymfc/scripts/Controllers/Paths/EpathY5.csv", header=None).iloc[:, 1]
-        self.xrefarr = 0
-        self.yrefarr = 0
+        
+        self.xrefarr = []
+        self.yrefarr = []
         
         self.allocation = ControlAllocation(OctorotorParams)
         self.resistance = np.full(8, OctorotorParams["resistance"])
@@ -68,23 +66,27 @@ class OctorotorBaseEnv(gym.Env):
         self.zref = 2
         self.psiref = np.zeros(3)
         self.reward_discount = OctorotorParams["reward_discount"]
+        
         # OpenAI Gym Params
         # State vector
         # state[0:2] pos
         # state[3:5] vel
         # state[6:8] angle
         # state[9:11] angle vel
-     
-        #self.observation_space = spaces.Box(np.full(1, -np.inf, dtype="float32"), np.full(1, np.inf, dtype="float32"), dtype="float32")
-
-        #self.action_space = spaces.Box(np.array([0.1, 0.1, 0.1, 0.1]), np.array([1, 1, 1, 1]), dtype="float32")
+        
         self.viewer = None
-        # introduce filtering for parameter estimator
-        #points = MerweScaledSigmaPoints(6, alpha=.1, beta=2, kappa=0)
-        #self.kf = UnscentedKalmanFilter(dim_x=6, dim_z=6, dt=OctorotorParams["dt"], fx=self.fx, hx=hx, points=points)
-        #self.kf.x = np.zeros(6)
+
     
-    
+    # -----------------------------
+    # 			Step()
+    # Main function to step the Testbed environment.
+    # Currently, takes 4 arguments:
+    # 		* xarr : array of x coordinates for waypoints
+    #		* yarr : array of y coordinates for waypoints
+    #		* z_ref : Altitude to maintain.
+    #		* steps : number of simulation steps in between waypoint changes.
+    #			(1 step = 0.001 sim second)
+    # -----------------------------
     
     def step(self, xarr , yarr, z_ref, steps):
         # Run through control allocation, motor controller, motor, and octorotor dynamics in this order
@@ -115,11 +117,9 @@ class OctorotorBaseEnv(gym.Env):
                 
             
             targetValues = {"xref": self.xref, "yref": self.yref} #target coordinants for posc
-            #print("Current Location: (" , self.state[0], " , " , self.state[1] , " , ", self.state[2] , ")")
             
-            #print("Location: (" , self.state[0], " , " , self.state[1] , " , ", self.state[2] , ")")         
+            
             # Update Position Controller
-            
             self.psiref[1], self.psiref[0] = self.posc.output(self.state, targetValues)
             
             # Update Attitude and Altitude Controller
@@ -129,11 +129,9 @@ class OctorotorBaseEnv(gym.Env):
             # Calculate omega reference using calculated thrust and euler angles
             udes = np.array([T_des, tau_des[0], tau_des[1], tau_des[2]], dtype="float32")
             omega_ref = self.allocation.get_ref_velocity(udes)
-            #print(omega_ref)
             
             # Send omega reference to motorController to calculate voltage array
             voltage = self.motorController.output(self.omega, omega_ref)
-            #print(voltage)
             
             # Send Voltage array to motors to produce RPM array
             if self.dt == 0.01:

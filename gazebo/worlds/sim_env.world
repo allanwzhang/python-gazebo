@@ -1514,5 +1514,10 @@
       <plugin name='Tarot_Motor_Model' filename='libTarot_Motor_Model.so'/>
       <pose>-0.008486 0.002805 0 0 -0 0</pose>
     </model>
+    
+    <plugin name='tarot_env' filename='libtarot_env.so'>
+      <modelName>tarot_t18</modelName>
+    </plugin>
+    
   </world>
 </sdf>

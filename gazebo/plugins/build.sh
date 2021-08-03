@@ -6,3 +6,5 @@ mkdir build
 cd build
 cmake ../
 make -j4
+
+export GAZEBO_PLUGIN_PATH=${GAZEBO_PLUGIN_PATH}:~/gazebo_testbed/gazebo/plugins/build

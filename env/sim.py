@@ -3,15 +3,7 @@ import time
 import sys
 import socket
 import numpy as np
-
-from gymfc.msgs.packet_pb2 import Packet
-from gymfc.msgs.publish_pb2 import Publish
-from google.protobuf import descriptor
-from gymfc.msgs import vector3d_pb2
-from gymfc.msgs.vector3d_pb2 import Vector3d
-from gymfc.msgs import vector8d_pb2
-from gymfc.msgs.vector8d_pb2 import Vector8d
-
+from Controllers.proto.vector8d_pb2 import Vector8d
 import controller
 
 

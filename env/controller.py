@@ -5,7 +5,6 @@ from Controllers.MotorController import MotorController
 from Controllers.AttitudeController import AttitudeController
 from Controllers.PositionController import PositionController
 from Controllers.AltitudeController import AltitudeController
-from Controllers.BLDCM import BLDCM
 from motor import Motor
 
 import numpy as np

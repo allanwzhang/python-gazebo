@@ -1,11 +1,8 @@
 import asyncio
-import pygazebo
 import time
 import numpy as np
 import codecs
-
-from gymfc.msgs import vector8d_pb2
-from gymfc.msgs.vector8d_pb2 import Vector8d
+from .proto.vector8d_pb2 import Vector8d
 
 class GazeboPublisher: 
 

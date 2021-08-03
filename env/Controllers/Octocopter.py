@@ -2,15 +2,11 @@ import numpy as np
 import scipy.integrate
 import math
 from numba import jit
-from filterpy.kalman import UnscentedKalmanFilter, MerweScaledSigmaPoints
-
 import socket
 import time
 import codecs
-import pygazebo
 import asyncio
-from gymfc.msgs import vector8d_pb2
-from gymfc.msgs.vector8d_pb2 import Vector8d
+from .proto.vector8d_pb2 import Vector8d
 
 
 
