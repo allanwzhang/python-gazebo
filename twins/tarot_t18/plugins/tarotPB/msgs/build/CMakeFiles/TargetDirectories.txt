@@ -1,3 +1,0 @@
-/home/myerdc18/gymfc/tarot/tarot_test/plugins/tarotPB/msgs/build/CMakeFiles/rebuild_cache.dir
-/home/myerdc18/gymfc/tarot/tarot_test/plugins/tarotPB/msgs/build/CMakeFiles/tarotPB_msgs.dir
-/home/myerdc18/gymfc/tarot/tarot_test/plugins/tarotPB/msgs/build/CMakeFiles/edit_cache.dir

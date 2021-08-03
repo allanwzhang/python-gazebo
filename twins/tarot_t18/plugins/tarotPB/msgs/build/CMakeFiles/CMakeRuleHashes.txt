@@ -1,2 +1,0 @@
-# Hashes of file build rules.
-51a0a9563f6ba832fa773fed0f5e60ac vector8d.pb.cc
