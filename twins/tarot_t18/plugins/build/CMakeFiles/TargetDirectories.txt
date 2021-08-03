@@ -1,0 +1,7 @@
+/home/myerdc18/gymfc/tarot/tarot_test/plugins/build/CMakeFiles/rebuild_cache.dir
+/home/myerdc18/gymfc/tarot/tarot_test/plugins/build/CMakeFiles/edit_cache.dir
+/home/myerdc18/gymfc/tarot/tarot_test/plugins/build/CMakeFiles/esc_plugin.dir
+/home/myerdc18/gymfc/tarot/tarot_test/plugins/build/CMakeFiles/tarot_env.dir
+/home/myerdc18/gymfc/tarot/tarot_test/plugins/build/msgs/CMakeFiles/rebuild_cache.dir
+/home/myerdc18/gymfc/tarot/tarot_test/plugins/build/msgs/CMakeFiles/tarotPB.dir
+/home/myerdc18/gymfc/tarot/tarot_test/plugins/build/msgs/CMakeFiles/edit_cache.dir

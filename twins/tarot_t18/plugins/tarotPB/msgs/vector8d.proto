@@ -1,0 +1,20 @@
+syntax = "proto2";
+package tarotPB.msgs;
+
+/// \ingroup gazebo_msgs
+/// \interface Vector8d
+/// \brief Message for a vector8 double
+
+
+message Vector8d
+{
+  required double motor_1 = 1;
+  required double motor_2 = 2;
+  required double motor_3 = 3;
+  required double motor_4 = 4;
+  required double motor_5 = 5;
+  required double motor_6 = 6;
+  required double motor_7 = 7;
+  required double motor_8 = 8;
+
+}
