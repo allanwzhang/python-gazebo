@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+15ce768edafa2a696b12dc0c7fc4f062 msgs/vector8d.pb.cc

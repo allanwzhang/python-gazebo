@@ -41,7 +41,7 @@ class OctorotorBaseEnv(gym.Env):
         self.xrefarr = []
         self.yrefarr = []
         
-        self.allocation = ControlAllocation(OctorotorParams)
+        self.allocation = ControlAllocation(OctorotorParams, version=1)
         self.resistance = np.full(8, OctorotorParams["resistance"])
         self.dt = OctorotorParams["dt"]
         
@@ -145,8 +145,6 @@ class OctorotorBaseEnv(gym.Env):
                 self.omega[7] = self.motor_8.update(voltage[7], 0.01)
                 i = 0
                 while i < 10:
-                    u = self.allocation.get_u(self.omega)
-                    self.octorotor.update_u(u)
                     self.octorotor.update(self.omega)
                     self.state = self.octorotor.get_state()
                     k += 1
@@ -160,8 +158,6 @@ class OctorotorBaseEnv(gym.Env):
                 self.omega[5] = self.motor_6.update(voltage[5], 0.001)
                 self.omega[6] = self.motor_7.update(voltage[6], 0.001)
                 self.omega[7] = self.motor_8.update(voltage[7], 0.001)
-                u = self.allocation.get_u(self.omega)
-                self.octorotor.update_u(u)
                 self.octorotor.update(self.omega)
                 self.state = self.octorotor.get_state()
                 k += 1

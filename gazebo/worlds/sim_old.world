@@ -112,7 +112,7 @@
     <state world_name='default'>
       <sim_time>0 0</sim_time>
       <real_time>0 0</real_time>
-      <wall_time>1627579255 402296475</wall_time>
+      <wall_time>1628092936 8581669</wall_time>
       <iterations>0</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
@@ -125,119 +125,119 @@
         </link>
       </model>
       <model name='tarot_old'>
-        <pose>0.008037 -0.008728 0.393094 0.000612 5e-05 -0</pose>
+        <pose>-0.012338 -0.007988 0.393234 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='battery'>
-          <pose>0.008034 -0.008698 0.343094 0.000612 5e-05 -0</pose>
-          <velocity>2.6e-05 -0.000315 0.000883 0.000917 7.5e-05 0</velocity>
+          <pose>-0.012338 -0.007988 0.343234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='fc_stack'>
-          <pose>0.008037 -0.008728 0.393094 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.00036 0.000883 0.000917 7.5e-05 0</velocity>
+          <pose>-0.012338 -0.007988 0.393234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='frame'>
-          <pose>0.008037 -0.008728 0.393094 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.00036 0.000883 0.000917 7.5e-05 0</velocity>
+          <pose>-0.012338 -0.007988 0.393234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_1'>
-          <pose>0.008037 0.626272 0.393483 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.000361 0.001465 0.000917 7.5e-05 0</velocity>
+          <pose>-0.012338 0.627012 0.393234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_2'>
-          <pose>0.45705 0.440285 0.393346 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.000361 0.001261 0.000917 7.5e-05 0</velocity>
+          <pose>0.436675 0.441025 0.393234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_3'>
-          <pose>0.643037 -0.008728 0.393062 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.00036 0.000835 0.000917 7.5e-05 0</velocity>
+          <pose>0.622662 -0.007988 0.393234 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_4'>
-          <pose>0.45705 -0.457741 0.392797 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.00036 0.000438 0.000917 7.5e-05 0</velocity>
+          <pose>0.436675 -0.457001 0.393234 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_5'>
-          <pose>0.008037 -0.643728 0.392705 0.000612 5e-05 -0</pose>
-          <velocity>2.9e-05 -0.00036 0.000301 0.000917 7.5e-05 0</velocity>
+          <pose>-0.012338 -0.642988 0.393234 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_6'>
-          <pose>-0.440976 -0.457741 0.392842 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.00036 0.000505 0.000917 7.5e-05 0</velocity>
+          <pose>-0.461351 -0.457001 0.393234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_7'>
-          <pose>-0.626963 -0.008728 0.393126 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.00036 0.000931 0.000917 7.5e-05 0</velocity>
+          <pose>-0.647338 -0.007988 0.393234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_8'>
-          <pose>-0.440976 0.440285 0.393391 0.000612 5e-05 -0</pose>
-          <velocity>3e-05 -0.000361 0.001328 0.000917 7.5e-05 0</velocity>
+          <pose>-0.461351 0.441025 0.393234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_1'>
-          <pose>0.008039 0.62625 0.428483 0.000612 5e-05 -0</pose>
-          <velocity>3.2e-05 -0.000393 0.001465 0.000917 7.5e-05 0</velocity>
+          <pose>-0.012338 0.627012 0.428234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_2'>
-          <pose>0.457052 0.440263 0.428346 0.000612 5e-05 -0</pose>
-          <velocity>3.2e-05 -0.000393 0.001261 0.000917 7.5e-05 0</velocity>
+          <pose>0.436675 0.441025 0.428234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_3'>
-          <pose>0.643039 -0.00875 0.428062 0.000612 5e-05 -0</pose>
-          <velocity>3.2e-05 -0.000392 0.000835 0.000917 7.5e-05 0</velocity>
+          <pose>0.622662 -0.007988 0.428234 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_4'>
-          <pose>0.457052 -0.457762 0.427797 0.000612 5e-05 -0</pose>
-          <velocity>3.2e-05 -0.000392 0.000438 0.000917 7.5e-05 0</velocity>
+          <pose>0.436675 -0.457001 0.428234 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_5'>
-          <pose>0.008039 -0.643749 0.427705 0.000612 5e-05 -0</pose>
-          <velocity>3.2e-05 -0.000392 0.000301 0.000917 7.5e-05 0</velocity>
+          <pose>-0.012338 -0.642988 0.428234 0 -0 0</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_6'>
-          <pose>-0.440974 -0.457763 0.427842 0.000612 5e-05 -0</pose>
-          <velocity>3.2e-05 -0.000392 0.000505 0.000917 7.5e-05 0</velocity>
+          <pose>-0.461351 -0.457001 0.428234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_7'>
-          <pose>-0.626961 -0.00875 0.428126 0.000612 5e-05 -0</pose>
-          <velocity>3.2e-05 -0.000392 0.000931 0.000917 7.5e-05 0</velocity>
+          <pose>-0.647338 -0.007988 0.428234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_8'>
-          <pose>-0.440974 0.440263 0.428391 0.000612 5e-05 -0</pose>
-          <velocity>3.2e-05 -0.000393 0.001328 0.000917 7.5e-05 0</velocity>
+          <pose>-0.461351 0.441025 0.428234 0 -0 0</pose>
+          <velocity>-0 0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
@@ -248,22 +248,20 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-1.63309 -4.3243 1.87974 0 0.271697 1.16088</pose>
+        <pose>-0.649142 -4.60792 1.79731 0 0.267697 1.45288</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
-    
     <plugin name='tarot_env' filename='libtarot_env.so'>
       <modelName>tarot_old</modelName>
     </plugin>
-    
     <model name='tarot_old'>
       <link name='frame'>
         <inertial>
           <mass>0.0001</mass>
           <inertia>
-            <ixx>1e-05</ixx>cd
+            <ixx>1e-05</ixx>
             <ixy>0</ixy>
             <ixz>0</ixz>
             <iyy>1e-05</iyy>
@@ -281,7 +279,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/myerdc18/gymfc/tarot/tarot_t18/meshes/tarot_frame_old.dae</uri>
+              <uri>../../twins/tarot_t18/meshes/tarot_frame_old.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -306,7 +304,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/myerdc18/gymfc/tarot/tarot_t18/meshes/tarot_frame_old.dae</uri>
+              <uri>../../twins/tarot_t18/meshes/tarot_frame_old.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -477,62 +475,6 @@
           <transparency>0</transparency>
           <cast_shadows>1</cast_shadows>
         </visual>
-        <collision name='collision_1'>
-          <laser_retro>0</laser_retro>
-          <max_contacts>10</max_contacts>
-          <pose>0 0 0 0 -0 0</pose>
-          <geometry>
-            <cylinder>
-              <radius>0.0241</radius>
-              <length>0.034</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>0 0 0</fdir1>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-              </ode>
-              <torsional>
-                <coefficient>1</coefficient>
-                <patch_radius>0</patch_radius>
-                <surface_radius>0</surface_radius>
-                <use_patch_radius>1</use_patch_radius>
-                <ode>
-                  <slip>0</slip>
-                </ode>
-              </torsional>
-            </friction>
-            <bounce>
-              <restitution_coefficient>0</restitution_coefficient>
-              <threshold>1e+06</threshold>
-            </bounce>
-            <contact>
-              <collide_without_contact>0</collide_without_contact>
-              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-              <collide_bitmask>1</collide_bitmask>
-              <ode>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-                <max_vel>0.01</max_vel>
-                <min_depth>0</min_depth>
-              </ode>
-              <bullet>
-                <split_impulse>1</split_impulse>
-                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-              </bullet>
-            </contact>
-          </surface>
-        </collision>
       </link>
       <link name='motor_2'>
         <inertial>
@@ -1572,10 +1514,8 @@
       </joint>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
-      
       <plugin name='Tarot_Motor_Model_Old' filename='libTarot_Motor_Model_Old.so'/>
-      
-      <pose>-0.012338 -0.007988 0 0 -0 0</pose>
+      <pose>0.013785 0.061413 0 0 -0 0</pose>
     </model>
   </world>
 </sdf>

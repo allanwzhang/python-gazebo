@@ -45,7 +45,7 @@ class ActionProtocol:
         self.send_time = None
         self.timeout = 30
         self.first = True
-        print("\tWriter Created.")
+        print("\tGazebo UAV writer Created.")
     
     
     def connection_made(self, transport):

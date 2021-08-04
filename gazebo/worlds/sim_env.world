@@ -112,7 +112,7 @@
     <state world_name='default'>
       <sim_time>0 0</sim_time>
       <real_time>0 0</real_time>
-      <wall_time>1628004918 496820586</wall_time>
+      <wall_time>1628092634 777450659</wall_time>
       <iterations>0</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
@@ -129,115 +129,115 @@
         <scale>1 1 1</scale>
         <link name='battery'>
           <pose>-0.008486 0.002805 0.343234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='fc_stack'>
           <pose>-0.008486 0.002805 0.393234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='frame'>
           <pose>-0.008486 0.002805 0.393234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_1'>
           <pose>0.234518 0.589469 0.393234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_2'>
           <pose>0.578178 0.245809 0.393234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_3'>
           <pose>0.578178 -0.240199 0.393234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_4'>
           <pose>0.234518 -0.583859 0.393234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_5'>
           <pose>-0.25149 -0.583859 0.393234 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
+          <velocity>0 -0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_6'>
           <pose>-0.59515 -0.240199 0.393234 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_7'>
           <pose>-0.59515 0.245809 0.393234 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='motor_8'>
           <pose>-0.25149 0.589469 0.393234 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_1'>
           <pose>0.234518 0.589469 0.428234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_2'>
           <pose>0.578178 0.245809 0.428234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_3'>
           <pose>0.578178 -0.240199 0.428234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_4'>
           <pose>0.234518 -0.583859 0.428234 0 -0 0</pose>
-          <velocity>0 0 -0 0 -0 0</velocity>
+          <velocity>0 -0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_5'>
           <pose>-0.25149 -0.583859 0.428234 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
+          <velocity>0 -0 -0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_6'>
           <pose>-0.59515 -0.240199 0.428234 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_7'>
           <pose>-0.59515 0.245809 0.428234 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='prop_8'>
           <pose>-0.25149 0.589469 0.428234 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
+          <velocity>0 -0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
@@ -248,11 +248,14 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-0.697289 -4.48984 1.13446 0 0.167697 1.45688</pose>
+        <pose>-0.655581 -5.10861 1.58419 -0 0.227697 1.44888</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
+    <plugin name='tarot_env' filename='libtarot_env.so'>
+      <modelName>tarot_t18</modelName>
+    </plugin>
     <model name='tarot_t18'>
       <link name='frame'>
         <inertial>
@@ -276,7 +279,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/myerdc18/gazebo_testbed/twins/tarot_t18/meshes/tarot_frame.dae</uri>
+              <uri>../../twins/tarot_t18/meshes/tarot_frame.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -301,7 +304,7 @@
           <pose>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/myerdc18/gazebo_testbed/twins/tarot_t18/meshes/tarot_frame.dae</uri>
+              <uri>../../twins/tarot_t18/meshes/tarot_frame.dae</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -1512,12 +1515,7 @@
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
       <plugin name='Tarot_Motor_Model' filename='libTarot_Motor_Model.so'/>
-      <pose>-0.008486 0.002805 0 0 -0 0</pose>
+      <pose>-0.007325 0.167314 0 0 -0 0</pose>
     </model>
-    
-    <plugin name='tarot_env' filename='libtarot_env.so'>
-      <modelName>tarot_t18</modelName>
-    </plugin>
-    
   </world>
 </sdf>

@@ -73,7 +73,7 @@ git clone https://github.com/osrf/gazebo.git /tmp/gazebo \
     && make install
 
 
-# /usr/local/lib is not on the load path by defalut so add it
+# /usr/local/lib is not on the load path by default so add it
 echo '/usr/local/lib' | sudo tee /etc/ld.so.conf.d/gazebo.conf
 ldconfig
 

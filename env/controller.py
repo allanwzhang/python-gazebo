@@ -53,8 +53,8 @@ PositionParams = {
         "kdx": 0.1,		# derivative gain x
         "kpy": 0.2,		# proportional gain y
         "kdy": 0.1,		# derivative gain y
-        "min_angle": -8*math.pi/180,		# min angle is -12 degrees
-        "max_angle": 8*math.pi/180			# max angle is +12 degrees
+        "min_angle": -12*math.pi/180,		# min angle is -12 degrees
+        "max_angle": 12*math.pi/180			# max angle is +12 degrees
 }
 
 
@@ -76,7 +76,7 @@ AltitudeParams = {
 
 def Create():
 	
-	print("Things imported.")
+	#print("Things imported.")
 	
 	# Setup PID Controllers
 	altc = AltitudeController(AltitudeParams)
