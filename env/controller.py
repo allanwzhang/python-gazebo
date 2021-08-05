@@ -59,7 +59,7 @@ PositionParams = {
 
 
 AttitudeParams = {
-        "kd": 25,		# derivative attitude gain
+        "kd": 10,		# derivative attitude gain
         "kp": 50,		# Proprotional attitude gain
         "j" : J
 }
@@ -74,7 +74,7 @@ AltitudeParams = {
 
 
 
-def Create():
+def Create(version=1):
 	
 	#print("Things imported.")
 	
@@ -96,7 +96,7 @@ def Create():
 	resistance = np.full(8, 0.2799)
 	OctorotorParams["resistance"] = resistance
 	
-	env = OctorotorBaseEnv(OctorotorParams)
+	env = OctorotorBaseEnv(OctorotorParams, version)
 	
 	return env
 	

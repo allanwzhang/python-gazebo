@@ -40,10 +40,6 @@ def start_sim():
 
 #start_sim()
 
-# Create environment with initial state
-print("Creating Environment.")
-env = controller.Create()
-
 
 def print_state():
 	print("Position: \t",
@@ -110,42 +106,37 @@ def sim_time(voltage_array, sim_steps):
 		attitude[0], attitude[1], attitude[2] = state[6], state[7], state[8]
 		ang_vel[0], ang_vel[1], ang_vel[2] = state[9], state[10], state[11]
 		
-		#time.sleep(0.0001)
+		time.sleep(0.008)
 		update_num += 1
 
 
 
 if __name__ == '__main__':
 	
-
-	#Start the Simulator
-	#pid = start_sim()
-	#print("Simulator started")
-	#time.sleep(8)
+	
+	# Create environment with initial state
+	# Version specifies which Control Allocation to use:
+	#	Define version = 0 for old tarot model.
+	#	Define version = 1 for new Tarot model with Spider orientation (default)
+	print("Creating Environment.")
+	env = controller.Create(version=0)
+	
 	
 	
 	print("Entering motor Simulation Loop.")
-	xarr = [ 0, 1, 4, 4]
-	yarr = [ 0, 0, 2, 4]
+	xarr = [ 0, 1, 4, -2]
+	yarr = [ 0, 2, 6, 4]
 	altitude = 3
-	env.step(xarr, yarr, altitude, 6000)
+	env.step(xarr, yarr, altitude, velocity=1)
 	
 	"""
 	print("Starting Simulation Demo.")
-	altitude = 19
-	#xarr = [18.8951, 112.28, 112.28, 112.28, 112.28]
-	#yarr = [-23.9868, 120.826, 120.826, 120.826, 120.826]
-	
-	xarr = [112.28, 112.28, 112.28, 112.28]
-	yarr = [120.826, 120.826, 120.826, 120.826]
-	env.step(xarr, yarr, altitude, 2000)
-	
-	
-	xarr = [112.28, 112.28]
-	yarr = [120.826, 120.826]
-	altitude = 8
-	env.step(xarr, yarr, altitude, 10000)
+	xarr = [92]
+	yarr = [118]
+	altitude = 18
+	env.step(xarr, yarr, altitude, velocity=2)
 	"""
+	
 	
 	print("Completed")
 	

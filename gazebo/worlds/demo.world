@@ -37,6 +37,10 @@
       <point>0 30 0</point>
       <point>40 30 0</point>
       <point>40 -100 0</point>
+    </road>
+    <road name='main_road_2'>
+      <width>7</width>
+      <point> 40 30 0</point>
       <point>40 100 0</point>
       <point>-100 100 0</point>
       <point>148 100 0</point>

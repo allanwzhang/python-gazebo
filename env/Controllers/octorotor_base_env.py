@@ -4,6 +4,7 @@ from gym.utils import seeding
 from gym.envs.classic_control  import rendering
 from .Octocopter import Octocopter
 from .Actuation import ControlAllocation
+from .GenerateTrajectories import GenerateTrajectories
 import pandas as pd
 import numpy as np
 import math
@@ -30,7 +31,11 @@ class OctorotorBaseEnv(gym.Env):
     # dt  - time_Step of simulation
     # Motor - a motor object that inherits the Motor base class: Must have constructor and update functions implemented
     # motorController - A controller object that inherits the controller base class: Must have constructor and output methods implemented
-    def __init__(self, OctorotorParams):
+    def __init__(self, OctorotorParams, version=1):
+        if version == 0:
+            print("Creating Octorotor environment for Old Tarot model.")
+        elif version == 1:
+            print("Creating Octorotor environmnet for Spider Tarot model.")
         super(OctorotorBaseEnv, self).__init__()
         # Octorotor Params
         self.octorotor = Octocopter(OctorotorParams)
@@ -41,7 +46,7 @@ class OctorotorBaseEnv(gym.Env):
         self.xrefarr = []
         self.yrefarr = []
         
-        self.allocation = ControlAllocation(OctorotorParams, version=1)
+        self.allocation = ControlAllocation(OctorotorParams, version)
         self.resistance = np.full(8, OctorotorParams["resistance"])
         self.dt = OctorotorParams["dt"]
         
@@ -73,7 +78,7 @@ class OctorotorBaseEnv(gym.Env):
         # state[3:5] vel
         # state[6:8] angle
         # state[9:11] angle vel
-        
+        self.trajectory = GenerateTrajectories()
         self.viewer = None
 
     
@@ -88,36 +93,46 @@ class OctorotorBaseEnv(gym.Env):
     #			(1 step = 0.001 sim second)
     # -----------------------------
     
-    def step(self, xarr , yarr, z_ref, steps):
+    def step(self, xarr , yarr, z_ref, velocity=1):
         # Run through control allocation, motor controller, motor, and octorotor dynamics in this order
-        reward = 0
-        #xarr = [0, 1, 4, 4]
-        #yarr = [0, 0, 2, 4]
+        
         
         #self.posc.update_params(np.array(action)) # why do this if we initialized the posc gains?
-        k = 0
-        refguessxarr = []
-        refguessyarr = []
-        xestimate = []
-        yestimate = []
-        psi0 = []
-        psi1 = []
+        step = 0
         self.zref = z_ref
         self.index = 0
+        x_traj = []
+        y_traj = []
+        i = 0
         
-        while k < 150000:
-            if k % steps == 0:
-                if self.index == 4:
-            	    self.index = 1
-                self.xref = xarr[self.index]
-                self.yref = yarr[self.index]
-                self.index+=1
+        while True:
+            if step == 0 or step == (len(x_traj) + 3) * 1000:
+                if self.index < len(xarr):
+                    self.xref = xarr[self.index]
+                    self.yref = yarr[self.index]
+                    self.index+=1
                 print("Current Location: (" , self.state[0], " , " , self.state[1] , " , ", self.state[2] , ")")
                 print("Target Coordinants: (" , self.xref, " , " , self.yref, ").")
+                x_traj, y_traj = self.trajectory.Generate(self.state[0], self.state[1], self.xref, self.yref, velocity)
                 
-            
-            targetValues = {"xref": self.xref, "yref": self.yref} #target coordinants for posc
-            
+                step = 0
+                if (len(x_traj) > 1):
+                    i = 1
+                else:
+                    i = 0
+                targetValues = {"xref": x_traj[i], "yref": y_traj[i]} #target coordinants for posc
+                print("\tTrajectory Update: (" , x_traj[i] , " , " , y_traj[i] , " )")
+                
+                
+                
+            if (step % 1000 == 0) and (step != 0):
+                if i < len(x_traj):
+                    targetValues = {"xref": x_traj[i], "yref": y_traj[i]}
+                    print("\tTrajectory Update: (" , x_traj[i] , " , " , y_traj[i] , " )")
+                
+                elif i == len(x_traj):
+                    targetValues = {"xref": self.xref, "yref": self.yref}
+                    print("\tTarget Trajectory: (" , self.xref , " , " , self.yref , " )")
             
             # Update Position Controller
             self.psiref[1], self.psiref[0] = self.posc.output(self.state, targetValues)
@@ -134,6 +149,9 @@ class OctorotorBaseEnv(gym.Env):
             voltage = self.motorController.output(self.omega, omega_ref)
             
             # Send Voltage array to motors to produce RPM array
+            # Two different functions: 1 for dt at 0.001 and 1 for 0.01.
+            # This is because a timestep in gazebo is 0.001 seconds, so for dt=0.01 we step
+            # Gazebo 10 times.
             if self.dt == 0.01:
                 self.omega[0] = self.motor_1.update(voltage[0], 0.01)
                 self.omega[1] = self.motor_2.update(voltage[1], 0.01)
@@ -143,12 +161,13 @@ class OctorotorBaseEnv(gym.Env):
                 self.omega[5] = self.motor_6.update(voltage[5], 0.01)
                 self.omega[6] = self.motor_7.update(voltage[6], 0.01)
                 self.omega[7] = self.motor_8.update(voltage[7], 0.01)
-                i = 0
-                while i < 10:
+                t = 0
+                while t < 10:
                     self.octorotor.update(self.omega)
                     self.state = self.octorotor.get_state()
-                    k += 1
-                    i += 1
+                    step += 1
+                    t += 1
+                    
             elif self.dt == 0.001:
                 self.omega[0] = self.motor_1.update(voltage[0], 0.001)
                 self.omega[1] = self.motor_2.update(voltage[1], 0.001)
@@ -160,18 +179,17 @@ class OctorotorBaseEnv(gym.Env):
                 self.omega[7] = self.motor_8.update(voltage[7], 0.001)
                 self.octorotor.update(self.omega)
                 self.state = self.octorotor.get_state()
-                k += 1
+                step += 1
+            
+            
+            if (step % 1000 == 0):
+                i += 1
                  
             
             
-            
-            #xarr.append(self.state[0])
-            #yarr.append(self.state[1])
-            #psi0.append(self.psiref[0])
-            #psi1.append(self.psiref[1])
-            
-            
-        return [self.res], reward, True, {"xerror": xarr, "yerror": yarr, "xref": refguessxarr, "yref": refguessyarr, "xestimate": xestimate, "yestimate": yestimate, "psi0": psi0, "psi1": psi1}
+        #return [self.res], reward, True, {"xerror": xarr, "yerror": yarr, "xref": refguessxarr, "yref": refguessyarr, "xestimate": xestimate, "yestimate": yestimate, "psi0": psi0, "psi1": psi1}
+
+
 
     def reset(self):
         OctorotorParams = self.OctorotorParams

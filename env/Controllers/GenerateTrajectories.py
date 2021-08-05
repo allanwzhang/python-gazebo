@@ -17,15 +17,14 @@ class GenerateTrajectories():
 	
 	
 	
-	def Generate(self, currentX, currentY, targetX, targetY):
+	def Generate(self, currentX, currentY, targetX, targetY, velocity):
 		
 		start_location = [currentX , currentY]
 		target_location = [targetX , targetY]
 		x = np.array([currentX, targetX])
 		y = np.array([currentY, targetY])
-		plt.plot(x, y, 'bo', label='Waypoints')
 		
-		desired_velocity = 1	# meters per second
+		desired_velocity = velocity	# meters per second
 		
 		# calculate total distance to cover
 		total_distance = math.sqrt((targetX - currentX)**2 + (targetY - currentY)**2)
@@ -41,36 +40,50 @@ class GenerateTrajectories():
 		# generate array of sample times: tSamples
 		sampletimetraj = 1
 		tSamples = []
-		for i in np.arange(sampletimetraj, time_interval, sampletimetraj):
+		for i in np.arange(0, time_interval, sampletimetraj):
 			tSamples.append(i)
-		print("Samples: ", tSamples)
+		print(len(tSamples), " samples.")
+		#print("Samples: ", tSamples)
 		
 		
 		# Generate B-Spline path
+		xx = np.linspace(currentX, targetX, len(tSamples), endpoint=False)
+		yy = np.linspace(currentY, targetY, len(tSamples), endpoint=False)
+		"""
 		xmin, xmax = x.min(), x.max()
-		xx = np.linspace(xmin, xmax, len(tSamples))
-		print(xx)
-		t, c, k = interpolate.splrep(x, y, s=0, k=1)
-		spline = interpolate.BSpline(t, c, k, extrapolate=False)
-		plt.plot(xx, spline(xx), 'r', label='BSpline')
+		if targetX > currentX:
+			xx = np.linspace(xmin, xmax, len(tSamples), endpoint=False)
+		else:
+			xx = np.linspace(xmax, xmin, len(tSamples), endpoint=False)
 		
-		x_array = []
-		y_array = []
+		ymin, ymax = y.min(), y.max()
+		if targetY > currentY:
+			yy = np.linspace(ymin, ymax, len(tSamples), endpoint=False)
+		else:
+			yy = np.linspace(ymax, ymin, len(tSamples), endpoint=False)
+		"""
 		
-		# Populate Xarray and Yarray with coordinates along the path at each sample time.
+		#t, c, k = interpolate.splrep(x, y, s=0, k=1)
+		#spline = interpolate.BSpline(t, c, k, extrapolate=False)
+		#plt.plot(xx, spline(xx), 'r', label='BSpline')
 		
-		plt.grid()
-		plt.legend(loc='best')
-		plt.show()
+		#plt.plot(x, y, 'bo', label='Waypoints')
+		#plt.grid()
+		#plt.legend(loc='best')
+		#plt.show()
 		#[q,qd,qdd,pp] = bsplinepolytraj(path',timeinterval,tSamples)
+		
+		return xx, yy
 
 
 
-	
+"""
 traj = GenerateTrajectories()	
-traj.Generate( 5, 5, 20, 20)
+xarray, yarray = traj.Generate( 0, 0 , 4, 4, velocity=1)
+for i in range(len(xarray)):
+	print(i, ". ( ", xarray[i], " , " , yarray[i] , " )") 
 
-
+"""
 
 
 

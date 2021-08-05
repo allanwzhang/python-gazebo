@@ -169,13 +169,14 @@ if __name__ == "__main__":
 		sim_time(np.array([0, 0, 0, 0, 0, 0, 0, 0]), 3000)
 	
 	
+	#TODO: Landing function below doesn't work
 	if file_name == 'paths/flight_data.xlsx':
 		print("Landing.")
 		
-		sim_time(hover_array, 3000)
-		sim_time(np.array([11.75, 11.75, 11.71, 11.71, 11.68,  11.68, 11.71, 11.71]), 500)
-		sim_time(hover_array, 1000)
-		sim_time(np.array([11.2, 11.2, 11.2, 11.2, 11.2, 11.2, 11.2, 11.2]), 10000)
+		#sim_time(hover_array, 3000)
+		sim_time(np.array([11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5, 11.5]), 10000)
+		#sim_time(hover_array, 1000)
+		sim_time(np.array([11.4, 11.4, 11.4, 11.4, 11.4, 11.4, 11.4, 11.4]), 10000)
 	
 	
 	
