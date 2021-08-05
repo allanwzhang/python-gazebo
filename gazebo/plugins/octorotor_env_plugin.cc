@@ -31,7 +31,7 @@
 
 namespace gazebo {
 	
-class tarot_env : public WorldPlugin
+class Octorotor_Env : public WorldPlugin
 {
 	
 	// Variables
@@ -68,7 +68,7 @@ class tarot_env : public WorldPlugin
 	private: transport::PublisherPtr cmdPub;
 	
 	
-	// Variables to access tarot model in environment.
+	// Variables to access vehicle model in environment.
 	public: std::string link_name;
 	public: physics::LinkPtr link_;
 	
@@ -77,7 +77,7 @@ class tarot_env : public WorldPlugin
 	
 	
 	
-	public: tarot_env() : WorldPlugin() {
+	public: Octorotor_Env() : WorldPlugin() {
 		
 		GOOGLE_PROTOBUF_VERIFY_VERSION;
 		
@@ -95,7 +95,7 @@ class tarot_env : public WorldPlugin
 		
 	}
 	
-	public: ~tarot_env() {
+	public: ~Octorotor_Env() {
 		gazebo::transport::fini();
 		this->callbackLoopThread.join();
 	}
@@ -120,7 +120,7 @@ class tarot_env : public WorldPlugin
 		this->world->SetPaused(true);
 		
 		this->callbackLoopThread =
-			boost::thread(boost::bind(&tarot_env::LoopThread, this));
+			boost::thread(boost::bind(&Octorotor_Env::LoopThread, this));
 		
 		
 	}
@@ -141,7 +141,7 @@ class tarot_env : public WorldPlugin
 			model_name = _sdf->GetElement("modelName")->Get<std::string>();
 		}
 		else {
-			gzerr << "[Tarot_Env_Plugin] Please specify the name of the Tarot model.\n";
+			gzerr << "[Octorotor_Env] Please specify the name of the Octorotor model.\n";
 		}
 		
 		
@@ -158,7 +158,7 @@ class tarot_env : public WorldPlugin
 		// All states will be recorded from this link as is the case in real flights.
 		link_ = model_->GetLink("fc_stack");
 		if (!link_) {
-			gzerr << "[Tarot_Env_Plugin] Could not find Fc_Stack Link on " << model_name << ".\n";
+			gzerr << "[Octorotor_Env] Could not find Fc_Stack Link on " << model_name << ".\n";
 		}
 		else {
 			gzdbg << "Accessed  Link: fc_stack from model: " << model_name << ".\n";
@@ -338,6 +338,6 @@ class tarot_env : public WorldPlugin
 	
 };
 
-GZ_REGISTER_WORLD_PLUGIN(tarot_env)
+GZ_REGISTER_WORLD_PLUGIN(Octorotor_Env)
 
 }

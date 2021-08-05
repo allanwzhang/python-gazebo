@@ -23,7 +23,7 @@
 
 namespace gazebo {
 
-	class Tarot_Motor_Model_Old : public ModelPlugin {
+	class S1000_Motor_Model : public ModelPlugin {
 
 		// Pointer to the model.
 		private: physics::ModelPtr model;
@@ -41,7 +41,7 @@ namespace gazebo {
 		public: double motor_velocities[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		public: double motor_rpms[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		
-		// Variables to access tarot model in environment.
+		// Variables to access vehicle model in environment.
 		public: physics::LinkPtr frame_;
 		public: physics::LinkPtr fc_stack_;
 		
@@ -112,11 +112,11 @@ namespace gazebo {
 			// Access frame link and fc_stack link. We'll apply forces to frame's CoG.
 			frame_ = model->GetLink("frame");
 			if (!frame_) {
-				gzerr << "[Tarot_Motor_Model_Old] Could not find frame link! Aborting.\n";
+				gzerr << "[S1000_Motor_Model] Could not find frame link! Aborting.\n";
 			}
 			fc_stack_ = model->GetLink("fc_stack");
 			if (!fc_stack_) {
-				gzerr << "[Tarot_Motor_ModelOld] Could not find fc_stack link! Aborting.\n";
+				gzerr << "[S1000_Motor_Model] Could not find fc_stack link! Aborting.\n";
 			}
 			
 			//Create Protobuff Subscriber for Communication
@@ -125,16 +125,16 @@ namespace gazebo {
 			node->Init();
 			
 			// Listen to tarot/motors for publishing an 8d vector representing rpm for each individual motor
-			sub_motors = node->Subscribe("/tarot/motors", &Tarot_Motor_Model_Old::cb_update_motors, this);
+			sub_motors = node->Subscribe("/tarot/motors", &S1000_Motor_Model::cb_update_motors, this);
 			gzdbg << "Subscribed to /tarot/motors for 8D Vector control." << std::endl;
 			
 			// Listen to the update event. This event is broadcast every
 			// simulation iteration.
 			this->updateConnection =
-				event::Events::ConnectWorldUpdateBegin(std::bind(&Tarot_Motor_Model_Old::OnUpdate, this));
+				event::Events::ConnectWorldUpdateBegin(std::bind(&S1000_Motor_Model::OnUpdate, this));
 
-			gzdbg << "Tarot Motor Model (Old) Loaded." << std::endl;
-			gzdbg << "This model represents the orientation for tarot_old.\n";
+			gzdbg << "S1000_Motor_Model Loaded." << std::endl;
+			gzdbg << "DJI-S1000 loaded into environment.\n";
 
 		}
 
@@ -292,6 +292,6 @@ namespace gazebo {
 	};
 
 	// Register this plugin with the simulator
-	GZ_REGISTER_MODEL_PLUGIN(Tarot_Motor_Model_Old)
+	GZ_REGISTER_MODEL_PLUGIN(S1000_Motor_Model)
 
 }

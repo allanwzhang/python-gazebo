@@ -3234,7 +3234,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='tarot_old'>
+      <model name='DJI-S1000'>
         <pose>18.8706 -24.0445 9.39296 0 0 0</pose>
         <scale>1 1 1</scale>
         <link name='battery'>
@@ -4394,8 +4394,8 @@
       </link>
       <pose>-23.4692 -3.98795 0 0 -0 0</pose>
     </model>
-    <plugin name='tarot_env' filename='libtarot_env.so'>
-      <modelName>tarot_old</modelName>
+    <plugin name='Octorotor_Env' filename='libOctorotor_Env.so'>
+      <modelName>DJI-S1000</modelName>
     </plugin>
     <model name='asphalt_plane_15'>
       <static>1</static>
@@ -36672,7 +36672,7 @@
       </link>
       <pose>165.941 226.341 0 0 -0 0.011208</pose>
     </model>
-    <model name='tarot_old'>
+    <model name='DJI-S1000'>
       <link name='frame'>
         <inertial>
           <mass>0.0001</mass>
@@ -37930,7 +37930,7 @@
       </joint>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <plugin name='Tarot_Motor_Model_Old' filename='libTarot_Motor_Model_Old.so'/>
+      <plugin name='S1000_Motor_Model' filename='libS1000_Motor_Model.so'/>
       <pose>34.1938 -25.4363 0 0 -0 0</pose>
     </model>
   </world>

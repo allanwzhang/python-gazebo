@@ -10,17 +10,17 @@ add_subdirectory(msgs)
 
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
-add_library(tarot_env SHARED tarot_env_plugin.cc)
+add_library(Octorotor_Env SHARED octorotor_env_plugin.cc)
 add_library(Tarot_Motor_Model SHARED tarot_motor_model.cc)
-add_library(Tarot_Motor_Model_Old SHARED tarot_motor_model_old.cc)
+add_library(S1000_Motor_Model SHARED S1000_motor_model.cc)
 
 
-target_link_libraries(tarot_env tarotPB ${GAZEBO_LIBRARIES})
+target_link_libraries(Octorotor_Env tarotPB ${GAZEBO_LIBRARIES})
 target_link_libraries(Tarot_Motor_Model tarotPB ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES})
-target_link_libraries(Tarot_Motor_Model_Old tarotPB ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES})
+target_link_libraries(S1000_Motor_Model tarotPB ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 add_dependencies(Tarot_Motor_Model tarotPB)
-add_dependencies(Tarot_Motor_Model_Old tarotPB)
+add_dependencies(S1000_Motor_Model tarotPB)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 

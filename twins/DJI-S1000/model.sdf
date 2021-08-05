@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <sdf version='1.7'>
-  <model name='tarot_old'>
+  <model name='DJI-S1000'>
     <link name='frame'>
       <inertial>
         <mass>0.0001</mass>
@@ -1259,7 +1259,7 @@
     <static>0</static>
     <allow_auto_disable>1</allow_auto_disable>
     
-    <plugin name='Tarot_Motor_Model_Old' filename='libTarot_Motor_Model_Old.so'/>
+    <plugin name='S1000_Motor_Model' filename='libS1000_Motor_Model.so'/>
     
   </model>
 </sdf>

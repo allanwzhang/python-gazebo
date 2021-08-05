@@ -31,7 +31,7 @@ ang_vel = [0, 0, 0]
 
 def start_sim():
 	# Start the Simulator
-	p = subprocess.Popen(["gazebo", "../gazebo/worlds/sim_env.world"], shell=False)
+	p = subprocess.Popen(["gazebo", "../gazebo/worlds/sim_tarot.world"], shell=False)
 	print("Starting gzserver with process ID=", p.pid)
 	#p = subprocess.Popen(["gzclient"], shell=False)
 	time.sleep(7)
@@ -39,6 +39,12 @@ def start_sim():
 	
 
 #start_sim()
+# Create environment with initial state
+# Version specifies which Control Allocation to use:
+#	Define version = 0 for old tarot model.
+#	Define version = 1 for new Tarot model with Spider orientation (default)
+print("Creating Environment.")
+env = controller.Create(version=1)
 
 
 def print_state():
@@ -114,12 +120,7 @@ def sim_time(voltage_array, sim_steps):
 if __name__ == '__main__':
 	
 	
-	# Create environment with initial state
-	# Version specifies which Control Allocation to use:
-	#	Define version = 0 for old tarot model.
-	#	Define version = 1 for new Tarot model with Spider orientation (default)
-	print("Creating Environment.")
-	env = controller.Create(version=0)
+
 	
 	
 	
