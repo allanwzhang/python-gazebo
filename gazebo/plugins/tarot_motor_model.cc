@@ -133,7 +133,8 @@ namespace gazebo {
 			this->updateConnection =
 				event::Events::ConnectWorldUpdateBegin(std::bind(&Tarot_Motor_Model::OnUpdate, this));
 
-			gzdbg << "Tarot Motor Model Loaded. Motors Aligned in Spider Formation." << std::endl;
+			gzdbg << "Tarot Motor Model Loaded." << std::endl;
+			gzdbg << "Tarot T18 loaded into environment." << std::endl;
 
 		}
 

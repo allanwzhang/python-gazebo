@@ -33,9 +33,9 @@ class OctorotorBaseEnv(gym.Env):
     # motorController - A controller object that inherits the controller base class: Must have constructor and output methods implemented
     def __init__(self, OctorotorParams, version=1):
         if version == 0:
-            print("Creating Octorotor environment for Old Tarot model.")
+            print("Creating Octorotor environment for DJI-S1000 model.")
         elif version == 1:
-            print("Creating Octorotor environmnet for Spider Tarot model.")
+            print("Creating Octorotor environmnet for Tarot T18 model.")
         super(OctorotorBaseEnv, self).__init__()
         # Octorotor Params
         self.octorotor = Octocopter(OctorotorParams)

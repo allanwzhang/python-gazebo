@@ -1,8 +1,0 @@
-/home/myerdc18/gazebo-testbed/gazebo/plugins/build/CMakeFiles/rebuild_cache.dir
-/home/myerdc18/gazebo-testbed/gazebo/plugins/build/CMakeFiles/edit_cache.dir
-/home/myerdc18/gazebo-testbed/gazebo/plugins/build/CMakeFiles/S1000_Motor_Model.dir
-/home/myerdc18/gazebo-testbed/gazebo/plugins/build/CMakeFiles/Octorotor_Env.dir
-/home/myerdc18/gazebo-testbed/gazebo/plugins/build/CMakeFiles/Tarot_Motor_Model.dir
-/home/myerdc18/gazebo-testbed/gazebo/plugins/build/msgs/CMakeFiles/rebuild_cache.dir
-/home/myerdc18/gazebo-testbed/gazebo/plugins/build/msgs/CMakeFiles/tarotPB.dir
-/home/myerdc18/gazebo-testbed/gazebo/plugins/build/msgs/CMakeFiles/edit_cache.dir
