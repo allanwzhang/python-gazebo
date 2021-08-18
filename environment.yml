@@ -3,11 +3,14 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - psutil
+  - openpyxl
   - gym
   - scipy
-  - numba
   - python=3.7
   - pandas
   - numpy
   - protobuf
-prefix: /home/ahmedi/miniconda3/envs/gazebo
+  - matplotlib
+  - pip:
+    - numba
