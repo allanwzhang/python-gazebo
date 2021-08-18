@@ -1,0 +1,13 @@
+name: gazebo
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - gym
+  - scipy
+  - numba
+  - python=3.7
+  - pandas
+  - numpy
+  - protobuf
+prefix: /home/ahmedi/miniconda3/envs/gazebo
