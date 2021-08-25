@@ -9,7 +9,6 @@ import asyncio
 from .proto.vector8d_pb2 import Vector8d
 
 
-
 """
 @jit 
 def _calc_rotation_matrix(angles):

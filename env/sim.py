@@ -5,6 +5,7 @@ import socket
 import numpy as np
 from Controllers.proto.vector8d_pb2 import Vector8d
 import controller
+exit(0)
 
 
 """

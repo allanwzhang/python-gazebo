@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+  <model name="octocopter">
+    <pose>0 0 0.5 0 0 0</pose>
+    <static>false</static>
+    <link name="wholebody">
+      <inertial>
+        <mass>1.38</mass>
+        <inertia>
+          <ixx>0.114</ixx>
+          <iyy>0.119</iyy>
+          <izz>0.218</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.45 0.45 0.27</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0</mu>
+              <mu2>0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.45 0.45 0.27</size>
+          </box>
+        </geometry>
+      </visual>
+      <sensor name="octocopter-imu" type="imu">
+        <always_on>1</always_on>
+        <pose>0 0 0 0 0 0</pose>
+        <imu>
+          <angular_velocity>
+            <x><noise type="none"></noise></x>
+            <y><noise type="none"></noise></y>
+            <z><noise type="none"></noise></z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x><noise type="none"></noise></x>
+            <y><noise type="none"></noise></y>
+            <z><noise type="none"></noise></z>
+          </linear_acceleration>
+        </imu>
+      </sensor>
+    </link>
+  </model>
+</sdf>

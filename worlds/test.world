@@ -1,0 +1,30 @@
+<sdf version='1.7'>
+  <world name='test'>
+
+    <light name='main_light' type='point'>
+      <direction>0 0 -1</direction>
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>1</cast_shadows>
+      <attenuation>
+        <range>100</range>
+        <linear>0</linear>
+        <constant>1</constant>
+      </attenuation>
+    </light>
+
+    <include>
+      <uri>model://ground_plane</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+  
+    <!-- <include>
+      <uri>model://DJI-S1000</uri>
+      <pose>0 0 0.5 0 0 0</pose>
+    </include> -->
+    <include>
+      <uri>model://octocopter</uri>
+      <pose>0 0 0.5 0 0 0</pose>
+    </include>
+
+  </world>
+</sdf>

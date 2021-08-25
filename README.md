@@ -1,12 +1,10 @@
-
-
-**Gazebo Testbed for Octorotor Control Algorithms (Version 0)**
+# Gazebo Testbed for Octorotor Control Algorithms
 
 This is the Gazebo framework for testing and training of RL Flight Controllers in a simulated 
 environment in the Gazebo simulator.
 
 
-**Installation**
+## Installation
 
 A shell script file called "build_gazebo.sh" is included in the repository. This shell script installs all of the required dependencies for DART version 6.7.0 and Gazebo version 11.5.1. DART is a physics engine that can be implemented in Gazebo in place of the default ODE physics engine and is highly recommended over the default engine. In order to use DART with Gazebo, Gazebo must be installed from source and the machine must build and install DART prior to installing Gazebo.
 
@@ -19,13 +17,13 @@ To install, execute:
 	sudo MAKE_FLAGS=-j4 ./build_gazebo.sh
 	
 
-**Building Required Plugins**
+## Building Required Plugins
 
 Gazebo uses pre-compiled libraries called plugins to do programmatically run simulations. The Testbed uses several plugins to simulate octorotor digital twins and communicate envrionment states back to python code.
 
 To build all of the required plugins, execute:
 
-	cd gazebo/plugins
+	cd plugins
 	./build.sh
 
 The included plugins are as follows in the gazebo/plugins folder:
@@ -42,8 +40,12 @@ Octorotor_Env
 Tarot_PB
 - This plugin defines the custom Google Protobuff message that the motor model listens to for motor commands.
 - The custom message is an 8 Dimensional Vector of doubles representing the RPM values of motors 1 - 8 respectively.
-						
 
+
+## Gazebo resources
+
+* [SDF file specification for model and world files](http://sdformat.org/spec)
+* [Gazebo tutorials](http://gazebosim.org/tutorials)
 
 
 **Using the Environment**
