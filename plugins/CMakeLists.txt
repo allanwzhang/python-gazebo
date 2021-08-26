@@ -23,5 +23,3 @@ add_dependencies(Tarot_Motor_Model tarotPB)
 add_dependencies(S1000_Motor_Model tarotPB)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
-
-

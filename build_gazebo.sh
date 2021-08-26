@@ -52,7 +52,9 @@ apt-get update && apt-get -y install \
     lsb-release \
     wget \
     mercurial \
-    libboost-all-dev
+    libboost-all-dev \
+    libsdformat9 \
+    libsdformat9-dev
 
 sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
 
@@ -79,8 +81,4 @@ ldconfig
 
 apt-get update && apt-get install -y \
     python3-pip \
-    python3
-
-
-
-
+    python3 \
