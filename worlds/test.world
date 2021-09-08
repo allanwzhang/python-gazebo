@@ -17,14 +17,14 @@
       <pose>0 0 0 0 0 0</pose>
     </include>
   
-    <!-- <include>
+    <include>
       <uri>model://DJI-S1000</uri>
       <pose>0 0 0.5 0 0 0</pose>
-    </include> -->
-    <include>
+    </include>
+    <!-- <include>
       <uri>model://octocopter</uri>
       <pose>0 0 0.5 0 0 0</pose>
-    </include>
+    </include> -->
 
   </world>
 </sdf>

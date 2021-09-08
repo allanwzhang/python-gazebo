@@ -6,6 +6,25 @@ environment in the Gazebo simulator.
 
 ## Installation
 
+The installation process requires several steps:
+
+On the machine running the physics simulation (host):
+
+1. Building and installing Gazebo,
+2. Building plugins for Gazebo simulation,
+
+On the machine using the python interface:
+
+1. Python virtual environment,
+
+On the (remote) machine using gazebo GUI:
+
+1. X-Display server
+
+All of these workflows can also be run on the same machine, in which an X-display server setup is not required.
+
+### Installing Gazebo
+
 A shell script file called "build_gazebo.sh" is included in the repository. This shell script installs all of the required dependencies for DART version 6.7.0 and Gazebo version 11.5.1. DART is a physics engine that can be implemented in Gazebo in place of the default ODE physics engine and is highly recommended over the default engine. In order to use DART with Gazebo, Gazebo must be installed from source and the machine must build and install DART prior to installing Gazebo.
 
 The build_gazebo.sh script handles the building and installing of Gazebo and DART. Building Gazebo from source is very resource intensive. Running the script may take more than an hour to execute.
@@ -42,14 +61,59 @@ Tarot_PB
 - The custom message is an 8 Dimensional Vector of doubles representing the RPM values of motors 1 - 8 respectively.
 
 
-## Gazebo resources
+### Python virtual environment
+
+Install `conda` (the full of minified version) from the [website](https://docs.conda.io/en/latest/miniconda.html).
+
+Install the python virtual environment:
+
+```bash
+conda create --file ./environment.yml
+conda activate gazebo
+# python work here
+```
+
+The default environment name is `gazebo`, but it can be overwritten using the `-n NAME` flag.
+
+### X-display server
+
+On windows, install the [`VcXsrV` application](https://sourceforge.net/projects/vcxsrv/).
+
+Run the application, setting:
+
+1. Display port number to 0,
+2. Unchecking "Native opengl" setting
+
+
+## Running demo
+
+Once the above steps are complete, start the X-display server application. On the host, run
+
+```bash
+gazebo worlds/demo.world --verbose
+```
+
+This should pop up the gazebo editor window, showing the UAV environment.
+
+On a separate console on the host:
+
+```bash
+conda activate gazebo
+python env/demo.py
+```
+
+This should start actuating the UAV the updates should show in the window.
+
+
+## Development
+
+
+### Gazebo resources
 
 * [SDF file specification for model and world files](http://sdformat.org/spec)
 * [Gazebo tutorials](http://gazebosim.org/tutorials)
 
 
-**Using the Environment**
+### Repository structure
 
-Will explain this in the future.
-
-
+TODO

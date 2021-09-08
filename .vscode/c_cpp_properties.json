@@ -6,7 +6,7 @@
                 "${workspaceFolder}/**",
                 "/usr/local/include/gazebo-11/**",
                 "/usr/local/include/**",
-                "/usr/include/sdformat-9.6/"
+                "/usr/include/sdformat-9.5/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/c++",
