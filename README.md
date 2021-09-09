@@ -31,7 +31,7 @@ The build_gazebo.sh script handles the building and installing of Gazebo and DAR
 
 To install, execute:
 
-	git clone https://git.isis.vanderbilt.edu/systemwidesafety/gazebo-testbed.git
+	git clone -b gym-env https://git.isis.vanderbilt.edu/systemwidesafety/gazebo-testbed.git
 	cd gazebo-testbed
 	sudo MAKE_FLAGS=-j4 ./build_gazebo.sh
 	
