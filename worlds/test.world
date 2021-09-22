@@ -22,9 +22,16 @@
       <pose>0 0 0.5 0 0 0</pose>
     </include>
     <!-- <include>
+      <uri>model://tarot_t18</uri>
+      <pose>0 0 0.5 0 0 0</pose>
+    </include> -->
+    <!-- <include>
       <uri>model://octocopter</uri>
       <pose>0 0 0.5 0 0 0</pose>
     </include> -->
 
+  <plugin name='Octorotor_Env' filename='libOctorotor_Env.so'>
+    <modelName>DJI-S1000</modelName>
+  </plugin>
   </world>
 </sdf>

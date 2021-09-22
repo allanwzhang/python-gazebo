@@ -1,7 +1,9 @@
+from posixpath import abspath
 import subprocess
 import time
 from datetime import datetime
-import sys
+import os
+from pathlib import Path
 import socket
 import psutil
 import numpy as np
@@ -108,16 +110,19 @@ def sim_time(voltage_array, sim_steps):
 
 
 if __name__ == "__main__":
+
+	abs_path = os.path.abspath(os.path.dirname(__file__))
 	
 	print("Starting Flight Demo.")
 	
 	print("Reading in flight data.")
 	my_sheet = 'Sheet1'
-	file_name = 'paths/flight_data.xlsx'
+	paths_dir = Path(__file__).resolve().parent / 'paths'
+	file_name = paths_dir / 'flight_data.xlsx'
 	df = pd.read_excel(file_name, sheet_name = my_sheet, engine='openpyxl')
 	
 	sim_end = 0
-	if file_name == 'paths/fault.xlsx':
+	if file_name.name == 'fault.xlsx':
 		sim_end = 5900
 	else:
 		sim_end = 50000
