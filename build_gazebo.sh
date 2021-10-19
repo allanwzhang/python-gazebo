@@ -61,7 +61,7 @@ wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
 apt-get update
 wget https://raw.githubusercontent.com/ignition-tooling/release-tools/master/jenkins-scripts/lib/dependencies_archive.sh -O /tmp/dependencies.sh
 . /tmp/dependencies.sh
-echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs sudo apt-get -y install
+echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs apt-get -y install
 
 # Build Gazebo
 git clone https://github.com/osrf/gazebo.git /tmp/gazebo \
