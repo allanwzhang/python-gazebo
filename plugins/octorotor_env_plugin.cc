@@ -101,7 +101,7 @@ class Octorotor_Env : public WorldPlugin
 	}
 	
 	
-	
+
 	public: void Load(physics::WorldPtr _world, sdf::ElementPtr _sdf) {
 		
 		// Create World Pointer, and Create and bind Socket addresses
@@ -156,6 +156,7 @@ class Octorotor_Env : public WorldPlugin
 		
 		// Now access the FC_stack on the model.
 		// All states will be recorded from this link as is the case in real flights.
+		// fc_stack contains the bulk of the mass of the model.
 		link_ = model_->GetLink("fc_stack");
 		if (!link_) {
 			gzerr << "[Octorotor_Env] Could not find Fc_Stack Link on " << model_name << ".\n";
@@ -222,15 +223,16 @@ class Octorotor_Env : public WorldPlugin
 			// Received an action from our python simulator
 			// TODO: Handle a Reset command and a motor velocity set command.
 			
-			// Reset Command
-			
-			
-			// Motor Command sent to esc_plugin
-			this->cmdPub->Publish(this->cmd_vector);
-			
-			//Step the world
-			this->world->Step(1);
-			
+			// Reset Command, when first motor's value is -1
+			if (this->cmd_vector.motor_1() == -1) {
+				this->world->Reset();
+			}
+			else {
+				// Motor Command sent to esc_plugin
+				this->cmdPub->Publish(this->cmd_vector);
+				//Step the world
+				this->world->Step(1);
+			}
 			
 			// Send state vector back through UDP
 			this->SendState();

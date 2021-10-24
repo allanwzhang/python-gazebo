@@ -14,7 +14,8 @@ set -e
 GAZEBO_MAJOR_VERSION=11
 GAZEBO_VERSION=gazebo11_11.5.1
 # Running sudo on this script will give $USER as root so get the currently logged in user instead
-USERNAME=$(logname)
+#USERNAME=$(logname)  # if this is unset, then use the next variable
+USERNAME=$SUDO_USER
 DART_VERSION=v6.10.1
 ROS_DISTRO=dummy
 # Compiling Gazebo can be very memory intensive, this variable passes additional flags to make for dart and gazebo. 
@@ -61,7 +62,10 @@ wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
 apt-get update
 wget https://raw.githubusercontent.com/ignition-tooling/release-tools/master/jenkins-scripts/lib/dependencies_archive.sh -O /tmp/dependencies.sh
 . /tmp/dependencies.sh
-echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs apt-get -y install
+
+apt-get -y install build-essential  cmake  debhelper  mesa-utils  x11-utils  cppcheck  xsltproc  python3-lxml  python3-psutil  python3  bc  netcat-openbsd  gnupg2  net-tools  locales  sudo libfreeimage-dev  libprotoc-dev  libprotobuf-dev  protobuf-compiler  freeglut3-dev  libcurl4-openssl-dev  libtinyxml-dev  libtinyxml2-dev  libtar-dev  libtbb-dev  libogre-1.9-dev libogre-2.1-dev  libxml2-dev  pkg-config  qtbase5-dev  libqwt-qt5-dev  libltdl-dev  libgts-dev  libboost-thread-dev  libboost-system-dev  libboost-filesystem-dev  libboost-program-options-dev  libboost-regex-dev  libboost-iostreams-dev  libbullet-dev  libsimbody-dev   libignition-common3-dev  libignition-fuel-tools4-dev  libignition-transport8-dev  libignition-math6-dev  libignition-msgs5-dev  libsdformat9-dev libflann-dev  libgtest-dev  libeigen3-dev  libassimp-dev  freeglut3-dev  libxi-dev  libxmu-dev  libtinyxml-dev  libtinyxml2-dev  libfcl-dev  liburdfdom-dev  libboost-system-dev  libboost-filesystem-dev
+
+#echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs apt-get -y install
 
 # Build Gazebo
 git clone https://github.com/osrf/gazebo.git /tmp/gazebo \

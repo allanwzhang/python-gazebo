@@ -5,7 +5,6 @@ channels:
 dependencies:
   - psutil
   - openpyxl
-  - gym
   - scipy
   - python=3.7
   - pandas
@@ -14,3 +13,4 @@ dependencies:
   - matplotlib
   - pip:
     - numba
+    - gym

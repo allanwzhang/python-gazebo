@@ -15,12 +15,20 @@ Tarot T18 Octocopter motor model.
 class Motor:
 
 	def __init__(self):
-		self.req = 0.2799		# resisitence
+		self.req = 0.2799				# resisitence
 		self.torque_constant = 0.0265	# torque constant Ke
-		self.J = 5.0000e-05		# Inertia
-		self.Df = 0			# Viscous Damping Coefficient
-		self.static_friction = 0	# static friction
+		self.J = 5.0000e-05				# Inertia
+		self.Df = 0						# Viscous Damping Coefficient
+		self.static_friction = 0		# static friction
 		self.motor_constant = 0.0265	# Motor constant Km
+
+		self._original_params = dict(
+			req=self.req,
+			torque_constant=self.torque_constant,
+			J=self.J,
+			Df=self.Df,
+			static_friction=self.static_friction,
+			motor_constant=self.motor_constant)
 		
 		self.stepNum = 0
 		self.omega = 0
@@ -42,8 +50,6 @@ class Motor:
 		return self.omega
 		
 
-
-
 	def omega_dot_i(self, time, state):
 		
 		# ----------------------------
@@ -61,14 +67,16 @@ class Motor:
 		domega = (t1 + t2 + t3) / self.J
 		
 		return domega
+	
+
+	def fault(self, param: str, magnitude: float):
+		if param in self._original_params:
+			value = self._original_params[param]
+			setattr(self, param, value * magnitude)
+		else:
+			raise AttributeError('Param %s cannot be faulted in motor.' % param)
 
 
-
-
-
-
-
-
-
-
-
+	def unfault(self):
+		for param, value in self._original_params.items():
+			setattr(self, param, value)
