@@ -1,3 +1,5 @@
+#!/bin/bash
+
 """
 		Build_Gazebo.sh
 All in one shell script to execute a clean build and install of Gazebo and 
@@ -58,7 +60,7 @@ apt-get update && apt-get -y install \
 sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
 
 #Install Dependencies
-wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 apt-get update
 wget https://raw.githubusercontent.com/ignition-tooling/release-tools/master/jenkins-scripts/lib/dependencies_archive.sh -O /tmp/dependencies.sh
 . /tmp/dependencies.sh
