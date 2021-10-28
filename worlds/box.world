@@ -1,0 +1,35 @@
+<sdf version='1.7'>
+  <world name='box-world'>
+
+    <physics type='dart'>
+        <max_step_size>0.001</max_step_size>
+        <real_time_factor>1</real_time_factor>
+        <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <light name='main_light' type='point'>
+      <direction>0 0 -1</direction>
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>1</cast_shadows>
+      <attenuation>
+        <range>100</range>
+        <linear>0</linear>
+        <constant>1</constant>
+      </attenuation>
+    </light>
+
+    <include>
+      <uri>model://ground_plane</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://box</uri>
+      <name>box</name>
+    </include>
+
+  <!-- <plugin name='Octorotor_Env' filename='libOctorotor_Env.so'>
+    <modelName>box</modelName>
+  </plugin> -->
+  </world>
+</sdf>
