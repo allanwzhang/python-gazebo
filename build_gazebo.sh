@@ -25,6 +25,9 @@ ROS_DISTRO=dummy
 # If you have sufficient memory, increase this value for a faster install.
 MAKE_FLAGS=${MAKE_FLAGS:=-j4}
 
+# update package repositories
+apt-get update
+
 # Remove any other installations of Dart installed through debian packages
 apt-get remove -y libdart*
 
@@ -59,15 +62,15 @@ apt-get update && apt-get -y install \
 
 sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
 
-#Install Dependencies
+# Get dependency information. This script checks the GAZEBO_MAJOR_VERSION variable
+# and sets dependencies accordingly
 wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
-apt-get update
 wget https://raw.githubusercontent.com/ignition-tooling/release-tools/master/jenkins-scripts/lib/dependencies_archive.sh -O /tmp/dependencies.sh
+
+# Populate dependencies variables for gazebo
 . /tmp/dependencies.sh
-
-apt-get -y install build-essential  cmake  debhelper  mesa-utils  x11-utils  cppcheck  xsltproc  python3-lxml  python3-psutil  python3  bc  netcat-openbsd  gnupg2  net-tools  locales  sudo libfreeimage-dev  libprotoc-dev  libprotobuf-dev  protobuf-compiler  freeglut3-dev  libcurl4-openssl-dev  libtinyxml-dev  libtinyxml2-dev  libtar-dev  libtbb-dev  libogre-1.9-dev libogre-2.1-dev  libxml2-dev  pkg-config  qtbase5-dev  libqwt-qt5-dev  libltdl-dev  libgts-dev  libboost-thread-dev  libboost-system-dev  libboost-filesystem-dev  libboost-program-options-dev  libboost-regex-dev  libboost-iostreams-dev  libbullet-dev  libsimbody-dev   libignition-common3-dev  libignition-fuel-tools4-dev  libignition-transport8-dev  libignition-math6-dev  libignition-msgs5-dev  libsdformat9-dev libflann-dev  libgtest-dev  libeigen3-dev  libassimp-dev  freeglut3-dev  libxi-dev  libxmu-dev  libtinyxml-dev  libtinyxml2-dev  libfcl-dev  liburdfdom-dev  libboost-system-dev  libboost-filesystem-dev
-
-#echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs apt-get -y install
+# Install gazebo dependencies
+echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs apt-get -y install
 
 # Build Gazebo
 git clone https://github.com/osrf/gazebo.git /tmp/gazebo \
