@@ -1,3 +1,4 @@
+#! /bin/bash
 #shell command to build a plugin.
 
 rm -r build

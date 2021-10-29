@@ -31,5 +31,8 @@
   <!-- <plugin name='Octorotor_Env' filename='libOctorotor_Env.so'>
     <modelName>box</modelName>
   </plugin> -->
+
+  <plugin name="gym_world" filename="libgym_world.so"/>
+
   </world>
 </sdf>

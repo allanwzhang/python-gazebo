@@ -225,7 +225,10 @@ class Octorotor_Env : public WorldPlugin
 			
 			// Reset Command, when first motor's value is -1
 			if (this->cmd_vector.motor_1() == -1) {
-				this->world->Reset();
+				world->SetPaused(true);
+				world->ResetTime();
+				world->ResetEntities(physics::Base::BASE);
+				world->SetPaused(false);
 			}
 			else {
 				// Motor Command sent to esc_plugin
