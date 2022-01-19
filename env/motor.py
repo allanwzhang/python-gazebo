@@ -1,5 +1,4 @@
 import scipy.integrate
-import numpy as np
 
 """
 
@@ -48,6 +47,11 @@ class Motor:
 		self.ode.set_initial_value(self.omega, 0)
 		self.omega = self.ode.integrate(self.ode.t + dt)
 		return self.omega
+
+
+	def reset(self):
+		self.omega = 0
+		self.stepNum = 0
 		
 
 	def omega_dot_i(self, time, state):

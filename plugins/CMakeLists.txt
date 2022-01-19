@@ -5,7 +5,7 @@ find_package(Boost 1.40 COMPONENTS system REQUIRED)
 
 include_directories(${GAZEBO_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR}/msgs)
 
-link_directories(${GAZEBO_LIBRARY_DIRS}  ${CMAKE_CURRENT_BINARY_DIR}/msgs ${CMAKE_CURRENT_BINARY_DIR}/tarotPB/msgs/build)
+link_directories(${GAZEBO_LIBRARY_DIRS}  ${CMAKE_CURRENT_BINARY_DIR}/msgs)
 add_subdirectory(msgs)
 
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")

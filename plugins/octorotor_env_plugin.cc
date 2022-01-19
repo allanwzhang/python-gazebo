@@ -1,6 +1,7 @@
 
 
 #include <ignition/math/Pose3.hh>
+#include <ignition/math/Rand.hh>
 #include "gazebo/physics/physics.hh"
 #include "gazebo/common/common.hh"
 #include "gazebo/gazebo.hh"
@@ -23,6 +24,7 @@
 #include <gazebo/msgs/vector8d.pb.h>
 
 #include <vector>
+#include <math.h>
 #include <ignition/math.hh>
 
 
@@ -225,10 +227,37 @@ class Octorotor_Env : public WorldPlugin
 			
 			// Reset Command, when first motor's value is -1
 			if (this->cmd_vector.motor_1() == -1) {
-				world->SetPaused(true);
+				gzdbg << "Reset\n";
+				// world->ResetEntities(physics::Base::BASE);
+
+				ignition::math::Vector3d pos(
+					0,
+					0,
+					5
+				);
+				ignition::math::Quaterniond rot(
+					ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
+					ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
+					ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8)
+				);
+				// ignition::math::Quaterniond rot(ignition::math::Rand::DblUniform(-M_PI/8, M_PI / 8), 0., 0.);
+				// ignition::math::Quaterniond rot(M_PI / 8., 0., 0.);
+				ignition::math::Pose3d initPose(pos, rot);
+				model_->SetWorldPose(initPose);
+				model_->ResetPhysicsStates();
+
+				cmd_vector.set_motor_1(0);
+				cmd_vector.set_motor_2(0);
+				cmd_vector.set_motor_3(0);
+				cmd_vector.set_motor_4(0);
+				cmd_vector.set_motor_5(0);
+				cmd_vector.set_motor_6(0);
+				cmd_vector.set_motor_7(0);
+				cmd_vector.set_motor_8(0);
+
+				cmdPub->Publish(cmd_vector);
+				world->Step(1);
 				world->ResetTime();
-				world->ResetEntities(physics::Base::BASE);
-				world->SetPaused(false);
 			}
 			else {
 				// Motor Command sent to esc_plugin

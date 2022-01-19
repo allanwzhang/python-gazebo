@@ -11,6 +11,8 @@ dependencies:
   - numpy
   - protobuf
   - matplotlib
+  - pip
   - pip:
     - numba
     - gym
+    - nest_asyncio

@@ -1,8 +1,10 @@
 import asyncio
 import time
-import numpy as np
-import codecs
-from .proto.vector8d_pb2 import Vector8d
+
+# This module is imported to patch asyncio so tasks can be added to the
+# already running event loop if code is imported in jupyter notebook.
+import nest_asyncio
+nest_asyncio.apply()
 
 class GazeboPublisher: 
 
@@ -17,7 +19,9 @@ class GazeboPublisher:
         self.writer = self.loop.create_datagram_endpoint(
             lambda: ActionProtocol(),
             remote_addr=(self.host, 9002))
+
         _, self.ac_protocol = self.loop.run_until_complete(self.writer)
+        self.publish = lambda coroutine: self.loop.run_until_complete(coroutine)
     
     
     
@@ -79,7 +83,6 @@ class ActionProtocol:
         self.send_time = None
         self.timeout = 30
         self.first = True
-        print("\tWriter Created.")
     
     
     def connection_made(self, transport):
@@ -99,9 +102,9 @@ class ActionProtocol:
         # For some reason, python publisher does not receive the first message and gets stuck
         # So, don't worry about the first message, since it will be updated the next 0.001 second.
         if self.first == True:
-        	self.packet_received = True
-        	self.state_message = "-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1"
-        	self.first = False
+            self.packet_received = True
+            self.state_message = "-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1"
+            self.first = False
         
         self.send_time = time.time()
         self.transport.sendto(ActionPacket(motor_vector).encode())
