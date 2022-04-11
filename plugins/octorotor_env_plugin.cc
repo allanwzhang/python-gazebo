@@ -233,15 +233,15 @@ class Octorotor_Env : public WorldPlugin
 				ignition::math::Vector3d pos(
 					0,
 					0,
-					5
+					1
 				);
-				ignition::math::Quaterniond rot(
-					ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
-					ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
-					ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8)
-				);
+				// ignition::math::Quaterniond rot(
+				// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
+				// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
+				// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8)
+				// );
 				// ignition::math::Quaterniond rot(ignition::math::Rand::DblUniform(-M_PI/8, M_PI / 8), 0., 0.);
-				// ignition::math::Quaterniond rot(M_PI / 8., 0., 0.);
+				ignition::math::Quaterniond rot(0., 0., 0.);
 				ignition::math::Pose3d initPose(pos, rot);
 				model_->SetWorldPose(initPose);
 				model_->ResetPhysicsStates();

@@ -6,13 +6,15 @@ dependencies:
   - psutil
   - openpyxl
   - scipy
-  - python=3.7
+  - python=3.9
   - pandas
   - numpy
+  - numba
   - protobuf
   - matplotlib
   - pip
   - pip:
-    - numba
     - gym
     - nest_asyncio
+    - pygazebo
+    - tqdm

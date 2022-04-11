@@ -78,11 +78,15 @@ class Octorotor(gym.Env):
         # Run message twice to update state after initial dummy state message
         state, _ = self.publisher.loop.run_until_complete(self.publisher.ac_protocol.write(initialize))
         state, _ = self.publisher.loop.run_until_complete(self.publisher.ac_protocol.write(initialize))
+    
+
+    def voltage_to_angular_vel(self, voltages: np.ndarray) -> list:
+        return [m.update(v, self.dt) for m, v in zip(self.motors, voltages)]
 
 
     def _send(self, voltages: np.ndarray, steps=1):
         for s in range(steps):
-            angular_vels = [m.update(v, self.dt) for m, v in zip(self.motors, voltages)]
+            angular_vels = self.voltage_to_angular_vel(voltages)
             rpms = [round(omega[0] * 9.5493) for omega in angular_vels]
             msg = Vector8d()
             msg.motor_1 = rpms[0]
@@ -99,6 +103,7 @@ class Octorotor(gym.Env):
 
 
     def step(self, action: np.ndarray):
+        # Array of voltages
         # Map [-1, 1] to [0, self.maxvoltage]
         action = np.clip((action + 1) * self.maxvoltage / 2, a_min=0, a_max=self.maxvoltage)
         state = self._send(action, steps=self.stepsize)

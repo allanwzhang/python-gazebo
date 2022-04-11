@@ -1,0 +1,3 @@
+[submodule "env/multirotor"]
+	path = env/multirotor
+	url = https://git.isis.vanderbilt.edu/ahmedi/multirotor.git
