@@ -1,5 +1,3 @@
-
-
 #include <ignition/math/Pose3.hh>
 #include <ignition/math/Rand.hh>
 #include "gazebo/physics/physics.hh"
@@ -21,7 +19,8 @@
 #include <unistd.h>
 
 #include <gazebo/msgs/msgs.hh>
-#include <gazebo/msgs/vector8d.pb.h>
+#include <vector8d.pb.h>
+#include <messages.pb.h>
 
 #include <vector>
 #include <math.h>
@@ -53,6 +52,7 @@ class Octorotor_Env : public WorldPlugin
 	public: socklen_t remaddrlen;
 	
 	public: tarotPB::msgs::Vector8d cmd_vector;	//Command message holding 8d array of motor cmds
+	public: tarotPB::msgs::Action action;
 	
 	
 	// State vector: Sent back over UDP so that Python models know what is happening.
@@ -67,7 +67,7 @@ class Octorotor_Env : public WorldPlugin
 	
 	// Communication channels to digital twin
 	private: transport::NodePtr nodeHandle;
-	private: transport::PublisherPtr cmdPub;
+	private: transport::PublisherPtr cmdPub, actPub;
 	
 	
 	// Variables to access vehicle model in environment.
@@ -116,6 +116,7 @@ class Octorotor_Env : public WorldPlugin
 		
 		// Create a publisher to step the world and send an 8D vector to the esc_plugin
 		this->cmdPub = this->nodeHandle->Advertise<tarotPB::msgs::Vector8d>("/tarot/motors");
+		this->actPub = this->nodeHandle->Advertise<tarotPB::msgs::Action>("/tarot/action");
 		gzdbg << "Environment Publisher Created." << std::endl;
 
 		// Force Pause because we drive the simulation steps
@@ -221,52 +222,51 @@ class Octorotor_Env : public WorldPlugin
 				continue;
 			}
 			
-			
-			// Received an action from our python simulator
-			// TODO: Handle a Reset command and a motor velocity set command.
+			this->actPub->Publish(this->action);
 			
 			// Reset Command, when first motor's value is -1
-			if (this->cmd_vector.motor_1() == -1) {
-				gzdbg << "Reset\n";
-				// world->ResetEntities(physics::Base::BASE);
+			// if (this->cmd_vector.motor_1() == -1) {
+			// 	gzdbg << "Reset\n";
+			// 	// world->ResetEntities(physics::Base::BASE);
 
-				ignition::math::Vector3d pos(
-					0,
-					0,
-					1
-				);
-				// ignition::math::Quaterniond rot(
-				// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
-				// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
-				// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8)
-				// );
-				// ignition::math::Quaterniond rot(ignition::math::Rand::DblUniform(-M_PI/8, M_PI / 8), 0., 0.);
-				ignition::math::Quaterniond rot(0., 0., 0.);
-				ignition::math::Pose3d initPose(pos, rot);
-				model_->SetWorldPose(initPose);
-				model_->ResetPhysicsStates();
+			// 	ignition::math::Vector3d pos(
+			// 		0,
+			// 		0,
+			// 		1
+			// 	);
+			// 	// ignition::math::Quaterniond rot(
+			// 	// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
+			// 	// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8),
+			// 	// 	ignition::math::Rand::DblUniform(-M_PI / 8, M_PI / 8)
+			// 	// );
+			// 	// ignition::math::Quaterniond rot(ignition::math::Rand::DblUniform(-M_PI/8, M_PI / 8), 0., 0.);
+			// 	ignition::math::Quaterniond rot(0., 0., 0.);
+			// 	ignition::math::Pose3d initPose(pos, rot);
+			// 	model_->SetWorldPose(initPose);
+			// 	model_->ResetPhysicsStates();
 
-				cmd_vector.set_motor_1(0);
-				cmd_vector.set_motor_2(0);
-				cmd_vector.set_motor_3(0);
-				cmd_vector.set_motor_4(0);
-				cmd_vector.set_motor_5(0);
-				cmd_vector.set_motor_6(0);
-				cmd_vector.set_motor_7(0);
-				cmd_vector.set_motor_8(0);
+			// 	cmd_vector.set_motor_1(0);
+			// 	cmd_vector.set_motor_2(0);
+			// 	cmd_vector.set_motor_3(0);
+			// 	cmd_vector.set_motor_4(0);
+			// 	cmd_vector.set_motor_5(0);
+			// 	cmd_vector.set_motor_6(0);
+			// 	cmd_vector.set_motor_7(0);
+			// 	cmd_vector.set_motor_8(0);
 
-				cmdPub->Publish(cmd_vector);
-				world->Step(1);
-				world->ResetTime();
-			}
-			else {
-				// Motor Command sent to esc_plugin
-				this->cmdPub->Publish(this->cmd_vector);
-				//Step the world
-				this->world->Step(1);
-			}
+			// 	cmdPub->Publish(cmd_vector);
+			// 	world->Step(1);
+			// 	world->ResetTime();
+			// }
+			// else {
+			// 	// Motor Command sent to esc_plugin
+			// 	this->cmdPub->Publish(this->cmd_vector);
+			// 	//Step the world
+			// 	this->world->Step(1);
+			// }
 			
 			// Send state vector back through UDP
+			this->world->Step(1);
 			this->SendState();
 		}
 		
@@ -292,7 +292,8 @@ class Octorotor_Env : public WorldPlugin
 		std::string msg;
 		msg.assign(buf, recvSize);
 		// TODO: Here we assign the sent UDP message to a string to send via Protobuf.
-		this->cmd_vector.ParseFromString(msg);
+		// this->cmd_vector.ParseFromString(msg);
+		this->action.ParseFromString(msg);
 		//Then we return true that we've received a message
 		return true;
 		

@@ -12,12 +12,14 @@
 #include <iostream>
 #include <boost/shared_ptr.hpp>
 #include <ignition/math/Vector3.hh>
-#include <gazebo/msgs/vector8d.pb.h>
 
 #include <cmath>
 #include <ignition/math/Pose3.hh>
 #include <ignition/math.hh>
 #include <vector>
+
+#include <vector8d.pb.h>
+#include <messages.pb.h>
 
 #define N 3
 
@@ -40,6 +42,9 @@ namespace gazebo {
 		//RPM : initial RPM is set to 0, received as Rev/Min, converted to rad/s
 		public: double motor_velocities[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		public: double motor_rpms[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+
+		public: ignition::math::Vector3d forces = {0.0,0.0,0.0};
+		public: ignition::math::Vector3d torques = {0.0,0.0,0.0};
 		
 		// Variables to access tarot model in environment.
 		public: physics::LinkPtr frame_;
@@ -47,7 +52,9 @@ namespace gazebo {
 		
 		// Shared pointer object for 8D vector
 		typedef const boost::shared_ptr<const tarotPB::msgs::Vector8d> Vector8dPtr;
-		
+		typedef const boost::shared_ptr<const tarotPB::msgs::Action> ActionPtr;
+
+		public: tarotPB::msgs::Action* action = new tarotPB::msgs::Action();
 
 		//----------------------------------------
 		//				CB_UPDATE_MOTORS
@@ -57,27 +64,6 @@ namespace gazebo {
 		// simulation step.
 		//----------------------------------------
 		public: void cb_update_motors(Vector8dPtr &_msg) {
-			
-			// Check if published Vector is different than current velocity
-			if ((_msg->motor_1()  / 9.549297 != motor_velocities[0]) || (_msg->motor_2()  / 9.549297 != motor_velocities[1])
-				|| (_msg->motor_3() / 9.549297 != motor_velocities[2]) || (_msg->motor_4() / 9.549297 != motor_velocities[3])
-				|| (_msg->motor_5() / 9.549297 != motor_velocities[4]) || (_msg->motor_6() / 9.549297 != motor_velocities[5])
-				|| (_msg->motor_7() / 9.549297 != motor_velocities[6]) || (_msg->motor_8() / 9.549297 != motor_velocities[7])) {
-				
-				/*
-					gzdbg << "UPDATE ~ Received Array of motor velocities." << std::endl <<
-						"\t[ " <<
-						_msg->motor_1() << " " <<
-						_msg->motor_2() << " " <<
-						_msg->motor_3() << " " <<
-						_msg->motor_4() << " " <<
-						_msg->motor_5() << " " <<
-						_msg->motor_6() << " " <<
-						_msg->motor_7() << " " <<
-						_msg->motor_8() << " ]" << std::endl;
-						
-				*/	
-			}
 			
 			motor_velocities[0] = _msg->motor_1() / 9.549297;
 			motor_velocities[1] = _msg->motor_2() / 9.549297;
@@ -97,6 +83,46 @@ namespace gazebo {
 			motor_rpms[6] = _msg->motor_7();
 			motor_rpms[7] = _msg->motor_8();
 			
+		}
+
+		public: void cb_update_action(ActionPtr &_msg) {
+			// Make a copy of the asynchronously received action message so it
+			// can be read the synchronous OnUpdate() method
+			action->CopyFrom(*_msg);
+
+			// Create vectors representing dynamics to apply to the vehicle
+			// during the asynchronous messaging loop
+			if (action->reset()) {
+				// No need to parse dynamics if the reset flag is set. It will
+				// be executed inthe OnUpdated method.
+				return;
+			}
+			if (action->type() == action->DYNAMICS) {
+				this->forces[0] = action->values(0);
+				this->forces[1] = action->values(1);
+				this->forces[2] = action->values(2);
+				this->torques[0] = action->values(3);
+				this->torques[1] = action->values(4);
+				this->torques[2] = action->values(5);
+			} else if (action->type() == action->SPEEDS) {
+				motor_velocities[0] = action->values(0) / 9.549297;
+				motor_velocities[1] = action->values(1) / 9.549297;
+				motor_velocities[2] = action->values(2) / 9.549297;
+				motor_velocities[3] = action->values(3) / 9.549297;
+				motor_velocities[4] = action->values(4) / 9.549297;
+				motor_velocities[5] = action->values(5) / 9.549297;
+				motor_velocities[6] = action->values(6) / 9.549297;
+				motor_velocities[7] = action->values(7) / 9.549297;
+				
+				motor_rpms[0] = action->values(0);
+				motor_rpms[1] = action->values(1);
+				motor_rpms[2] = action->values(2);
+				motor_rpms[3] = action->values(3);
+				motor_rpms[4] = action->values(4);
+				motor_rpms[5] = action->values(5);
+				motor_rpms[6] = action->values(6);
+				motor_rpms[7] = action->values(7);
+			}
 		}
 
 
@@ -125,7 +151,8 @@ namespace gazebo {
 			node->Init();
 			
 			// Listen to tarot/motors for publishing an 8d vector representing rpm for each individual motor
-			sub_motors = node->Subscribe("/tarot/motors", &Tarot_Motor_Model::cb_update_motors, this);
+			// sub_motors = node->Subscribe("/tarot/motors", &Tarot_Motor_Model::cb_update_motors, this);
+			sub_motors = node->Subscribe("/tarot/action", &Tarot_Motor_Model::cb_update_action, this);
 			gzdbg << "Subscribed to /tarot/motors for 8D Vector control." << std::endl;
 			
 			// Listen to the update event. This event is broadcast every
@@ -151,12 +178,38 @@ namespace gazebo {
 			//		* Set the angular velocity of each individual motor
 			//		* Calculate resulting forces and torques of each motor
 			//		* Apply Forces and Torques to the CoG of the UAV - the FC_Stack link
-			
-			this->SetVelocities();
+			if (action->reset()) {
+				// gzdbg << "RESET LOGIC\n";
+				ignition::math::Vector3d position(
+					action->state().position(0),
+					action->state().position(1),
+					action->state().position(2)
+				);
+				ignition::math::Vector3d velocity(
+					action->state().velocity(0),
+					action->state().velocity(1),
+					action->state().velocity(2)
+				);
+				ignition::math::Quaterniond orientation(
+					action->state().orientation(0),
+					action->state().orientation(1),
+					action->state().orientation(2)
+				);
+				ignition::math::Vector3d angular_rate(
+					action->state().angular_rate(0),
+					action->state().angular_rate(1),
+					action->state().angular_rate(2)
+				);
+				model->ResetPhysicsStates();
+				ignition::math::Pose3d initPose(position, orientation);
+				// frame_->SetWorldPose(initPose);
+				model->SetAngularVel(angular_rate);
+				model->SetLinearVel(velocity);
+				model->SetWorldPose(initPose);
+			}
+			// this->SetVelocities();
 			this->ApplyForcesAndTorques();
-			
-			
-
+			// gzdbg << action->DebugString() << std::endl;
 		}
 		
 		
@@ -185,6 +238,11 @@ namespace gazebo {
 		// --------------------------
 		
 		public: void ApplyForcesAndTorques() {
+
+			// gzdbg << forces << std::endl;
+			fc_stack_->AddRelativeForce(this->forces);
+			fc_stack_->AddTorque(this->torques);
+			return;
 			
 			// Calculate Thrust
 			double coef_t = 0.065;
@@ -284,13 +342,15 @@ namespace gazebo {
 			// Add Force and Torque to Link frame
 			fc_stack_->AddRelativeForce(force);
 			fc_stack_->AddTorque(torque);
-			
-			//gzdbg << "Force: " << force.X() << " " << force.Y() << " " << force.Z() << "\n";
-			
-			
-			
 		}
 		
+
+		// public: void ApplyAction() {
+		// 	ignition::math::Vector3d torque();
+		// 	ignition::math::Vector3d force();
+		// 	fc_stack_->AddRelativeForce(force);
+		// 	fc_stack_->AddTorque(torque);
+		// }
 		
 		public: void transpose(double A[][N], double B[][N]) {
 			int i, j;

@@ -3,3 +3,4 @@ __pycache__/
 build/
 *.o
 *.so
+env/msgs/*_pb2.py

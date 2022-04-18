@@ -34,7 +34,7 @@ class GymModelPlugin : public ModelPlugin
                                 << "\t" << mainLink->WorldPose().Pos() << std::endl;
             lastSec = currSec;
         }
-        mainLink->SetForce(ignition::math::Vector3d(0.1, 0, 0));
+        // mainLink->SetForce(ignition::math::Vector3d(0.1, 0, 0));
     }
 
 

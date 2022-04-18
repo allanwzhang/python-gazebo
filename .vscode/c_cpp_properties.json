@@ -3,15 +3,21 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
-                "/usr/local/include/gazebo-11/**",
-                "/usr/local/include/**",
+                "${workspaceFolder}/plugins/build/",
+                "${workspaceFolder}/plugins/build/msgs/",
+                "/usr/local/include/gazebo-11/",
+                "/usr/local/include/ignition/math6/",
+                "/usr/local/include/ignition/transport8/",
+                "/usr/local/include/ignition/msgs5/",
+                "/usr/local/include/ignition/common3/",
+                "/usr/local/include/ignition/fuel_tools4/",
+                "/usr/local/include/",
                 "/usr/include/sdformat-9.5/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/c++",
             "cStandard": "c11",
-            "cppStandard": "c++14",
+            "cppStandard": "c++17",
             "intelliSenseMode": "linux-gcc-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
         }

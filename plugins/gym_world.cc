@@ -48,12 +48,6 @@ class WorldPluginTutorial : public WorldPlugin
                 world->SetPaused(true);
                 world->ResetTime();
                 world->ResetEntities(physics::Base::BASE);
-                // physics::ModelPtr box = world->ModelByName("box");
-                // box->SetLinearVel(ignition::math::Vector3d(0, 0, 0));
-                // box->SetWorldPose(ignition::math::Pose3d(
-                //     ignition::math::Vector3d(0, 0, 0.5),
-                //     ignition::math::Quaterniond(0, 0, 0)));
-                // world->Reset();
                 world->SetPaused(false);
             }
         }

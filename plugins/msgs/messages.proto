@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+package tarotPB.msgs;
+
+
+message Action {
+    enum Type {
+        DYNAMICS = 0;
+        SPEEDS = 1;
+    }
+    optional Type type = 1 [default = DYNAMICS];
+    repeated double values = 2 [packed = true];
+    // When the reset signal is sent, the new state of the vehicle must be
+    // specified.
+    optional bool reset = 3 [default = false];
+    optional State state = 4;
+}
+
+
+
+message State {
+    // All state fields are 3-vectors
+    repeated double position = 1 [packed = true];
+    repeated double velocity = 2 [packed = true];
+    repeated double orientation = 3 [packed = true];
+    repeated double angular_rate = 4 [packed = true];
+}

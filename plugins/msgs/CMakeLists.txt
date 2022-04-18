@@ -9,10 +9,11 @@ endforeach()
 
 set (msgs
   vector8d.proto
+  vector6d.proto
+  messages.proto
 )
 
 PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${msgs})
-
 
 add_library(tarotPB SHARED ${PROTO_SRCS})
 target_link_libraries(tarotPB ${PROTOBUF_LIBRARY})
