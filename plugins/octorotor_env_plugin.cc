@@ -267,6 +267,9 @@ class Octorotor_Env : public WorldPlugin
 			
 			// Send state vector back through UDP
 			this->world->Step(1);
+			if (this->action.reset()) {
+				this->world->ResetTime();
+			}
 			this->SendState();
 		}
 		

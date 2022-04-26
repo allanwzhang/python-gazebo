@@ -26,35 +26,33 @@
 namespace gazebo {
 
 	class Tarot_Motor_Model : public ModelPlugin {
-
-		// Pointer to the model.
-		private: physics::ModelPtr model;
-
-		// Pointer to the update event connection
-		private: event::ConnectionPtr updateConnection;
-
-		//Subscriber pointer - Individual motors - declared as global variable.
-		gazebo::transport::SubscriberPtr sub_motors;
-
-		// Number of updates received
-		public: int update_num = 0;
-		
-		//RPM : initial RPM is set to 0, received as Rev/Min, converted to rad/s
-		public: double motor_velocities[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-		public: double motor_rpms[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-
-		public: ignition::math::Vector3d forces = {0.0,0.0,0.0};
-		public: ignition::math::Vector3d torques = {0.0,0.0,0.0};
-		
-		// Variables to access tarot model in environment.
-		public: physics::LinkPtr frame_;
-		public: physics::LinkPtr fc_stack_;
 		
 		// Shared pointer object for 8D vector
 		typedef const boost::shared_ptr<const tarotPB::msgs::Vector8d> Vector8dPtr;
 		typedef const boost::shared_ptr<const tarotPB::msgs::Action> ActionPtr;
 
-		public: tarotPB::msgs::Action* action = new tarotPB::msgs::Action();
+		// Pointer to the model.
+		private:
+			physics::ModelPtr model;
+			// Pointer to the update event connection
+			event::ConnectionPtr updateConnection;
+
+		//Subscriber pointer - Individual motors - declared as global variable.
+		gazebo::transport::SubscriberPtr sub_motors;
+
+		// Number of updates received
+		public:
+			//RPM : initial RPM is set to 0, received as Rev/Min, converted to rad/s
+			double motor_velocities[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+			double motor_rpms[8] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+			ignition::math::Vector3d forces = {0.0,0.0,0.0};
+			ignition::math::Vector3d torques = {0.0,0.0,0.0};
+		
+			// Variables to access tarot model in environment.
+			physics::LinkPtr frame_;
+			physics::LinkPtr fc_stack_;
+
+			tarotPB::msgs::Action* action = new tarotPB::msgs::Action();
 
 		//----------------------------------------
 		//				CB_UPDATE_MOTORS
@@ -202,7 +200,6 @@ namespace gazebo {
 				);
 				model->ResetPhysicsStates();
 				ignition::math::Pose3d initPose(position, orientation);
-				// frame_->SetWorldPose(initPose);
 				model->SetAngularVel(angular_rate);
 				model->SetLinearVel(velocity);
 				model->SetWorldPose(initPose);
