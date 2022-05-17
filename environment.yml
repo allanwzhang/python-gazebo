@@ -16,5 +16,6 @@ dependencies:
   - pip:
     - gym
     - nest_asyncio
-    - pygazebo
     - tqdm
+    - pymavlink==2.4.29
+    - git+https://github.com/hazrmard/py3gazebo.git
