@@ -1,6 +1,8 @@
 import numpy as np
-from Controllers.proto.vector8d_pb2 import Vector8d
-from Controllers.GazeboPublisher import GazeboPublisher
+from msgs.vector8d_pb2 import Vector8d
+from msgs.messages_pb2 import Action, State
+from gazebo_comms import GazeboCommms
+from multirotor.simulation import Multirotor
 from motor import Motor
 import gym
 
@@ -9,6 +11,90 @@ import gym
 # MASTER_TCP_PORT = 11345
 # # Create UDP Publisher to communicate with Tarot_Env_Plugin
 # publisher = GazeboPublisher.GazeboPublisher(MASTER_TCP_IP, MASTER_TCP_PORT)
+
+
+class BaseOctorotor(gym.Env):
+
+
+    def __init__(self, vehicle: Multirotor=None) -> None:
+        super().__init__()
+        self.action_space = gym.spaces.Box(
+            low=-np.inf,
+            high=np.inf,
+            dtype=np.float32,
+            shape=(6,)
+        )
+        # pos, vel, att, ang vel
+        self.observation_space = gym.spaces.Box(
+            low=-np.inf,
+            high=np.inf,
+            dtype=np.float32,
+            shape=(12,)
+        )
+        self.vehicle = vehicle
+        self.state : np.ndarray = None
+
+
+    def reset(self):
+        if self.vehicle is not None:
+            return self.vehicle.reset()
+
+
+    def reward(self, state, action, nstate):
+        pass
+
+
+
+class LocalOctorotor(BaseOctorotor):
+
+
+    def __init__(self, vehicle: Multirotor = None) -> None:
+        super().__init__(vehicle)
+
+
+    def step(self, action: np.ndarray):
+        state = self.vehicle.step(u=action)
+        return state, None, None, None
+
+
+
+class RemoteOctorotor(BaseOctorotor):
+
+    MASTER_TCP_IP   = '127.0.0.1'
+    MASTER_TCP_PORT = 11345
+
+
+    def __init__(self, vehicle: Multirotor=None) -> None:
+        super().__init__(vehicle=vehicle)
+        self.publisher = GazeboCommms(self.MASTER_TCP_IP, self.MASTER_TCP_PORT)
+
+
+    def step(self, action: np.ndarray):
+        a = Action()
+        a.type = a.DYNAMICS
+        a.values[:] = action
+        state, exc = self.publisher.send_UDP(a)
+        try:
+            self.vehicle.state = state
+        except AttributeError:
+            pass
+        return state, None, None, None
+
+
+    def reset(self, pos=(0,0,1), vel=(0,0,0), orientation=(0,0,0), angular_rate=(0,0,0)):
+        super().reset()
+        a = Action()
+        a.reset = True
+        a.state.position[:] = pos
+        a.state.velocity[:] = vel
+        a.state.orientation[:] = orientation
+        a.state.angular_rate[:] = angular_rate
+        state, _ = self.publisher.send_UDP(a)
+        try:
+            self.vehicle.state = state
+        except AttributeError:
+            pass
+        return state
 
 
 
@@ -54,7 +140,7 @@ class Octorotor(gym.Env):
                 dtype=np.float32,
                 shape=(11,)
             )
-        self.publisher = GazeboPublisher(self.MASTER_TCP_IP, self.MASTER_TCP_PORT)
+        self.publisher = GazeboCommms(self.MASTER_TCP_IP, self.MASTER_TCP_PORT)
         self.motors = [Motor() for _ in range(8)]
         self.t = 0
         self.targetatt = None
@@ -181,10 +267,6 @@ class Octorotor(gym.Env):
 
 
 
-dict_space = gym.spaces.Dict({
-    'position': gym.spaces.Box(low=-np.inf, high=-np.inf, dtype=np.float32, shape=(3,)),
-    'velocity': gym.spaces.Box(low=-np.inf, high=-np.inf, dtype=np.float32, shape=(3,)),
-    'orientation': gym.spaces.Box(low=-np.inf, high=-np.inf, dtype=np.float32, shape=(3,)),
-    'angular_velocity': gym.spaces.Box(low=-np.inf, high=-np.inf, dtype=np.float32, shape=(3,))
-})
+def make_env(gazebo: bool=True, simulation_params=None, vehicle_params=None):
+    pass
 

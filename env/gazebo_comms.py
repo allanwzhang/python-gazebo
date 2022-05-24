@@ -85,10 +85,10 @@ class UDPProtocol:
         # If statement to force UDP message to continue after first message.
         # For some reason, python publisher does not receive the first message and gets stuck
         # So, don't worry about the first message, since it will be updated the next 0.001 second.
-        if self.first == True:
-            self.packet_received = True
-            self.state_message = "-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1"
-            self.first = False
+        # if self.first == True:
+        #     self.packet_received = True
+        #     self.state_message = "-1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1"
+        #     self.first = False
         
         self.send_time = time.time()
         # Send the action message
