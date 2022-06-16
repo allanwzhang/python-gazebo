@@ -41,7 +41,7 @@ class BaseOctorotor(gym.Env):
 
 
     def reward(self, state, action, nstate):
-        pass
+        raise NotImplementedError
 
 
 
@@ -53,7 +53,7 @@ class LocalOctorotor(BaseOctorotor):
 
 
     def step(self, action: np.ndarray):
-        state = self.vehicle.step(u=action)
+        state = self.vehicle.step_dynamics(u=action)
         return state, None, None, None
 
 
