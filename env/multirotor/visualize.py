@@ -1,4 +1,4 @@
-from typing import Tuple, Union
+from typing import Callable, Tuple, Union
 import threading as th
 import multiprocessing as mp
 import queue
@@ -11,9 +11,13 @@ from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Line3D
 
+from .control import Controller
+from .env import BaseMultirotorEnv
+
 from .coords import body_to_inertial, direction_cosine_matrix
 from .helpers import vehicle_params_factory
 from .simulation import Multirotor
+from .trajectories import Trajectory
 
 
 
@@ -248,3 +252,137 @@ def is_terminal() -> bool:
         return True
     except ImportError:
         return True
+
+
+
+def get_trajectory_info(
+    ctrl: Controller, env: BaseMultirotorEnv, traj: Trajectory,
+    wind_fn: Callable[[float, Multirotor], np.ndarray],
+    action_min: float = 0, action_max: float = 600.
+
+):
+    targets = []
+    actions = []
+    speeds = []
+    positions = []
+    velocities = []
+    orientations = []
+    errs = []
+    alloc_errs = []
+    alloc_th = []
+    alloc_to = []
+
+    for i, pos in enumerate(traj):
+        if i==100000: break
+        # Get prescribed dynamics for system
+        ref = np.asarray([*pos, 0.])
+        dynamics = ctrl.step(ref)
+        thrust, torques = dynamics[0], dynamics[1:]
+        # Convert dynamics into motor rad/s
+        action = env.vehicle.allocate_control(thrust, torques)
+        action = np.clip(action, a_min=action_min, a_max=action_max)
+        # if i > 30000: action[3] = min(action[3], 300)
+        # Get resultant forces/torques given propeller states
+        f, t = env.vehicle.get_forces_torques(action, state)
+        # Add disturbances
+        f[:2] += wind_fn(i, env.vehicle)
+        # Convert RPM to voltage and apply to simulation
+        # state, _, done, _ = env.step(normalize_voltage(rpm_to_voltage(action)))
+        state, *_ = env.step(np.asarray([*f, *t]))
+        
+        targets.append(pos)
+        errs.append(ctrl.ctrl_p.err)
+        alloc_th.append(thrust)
+        alloc_to.append(torques)
+        alloc_errs.append(np.asarray([thrust, *torques]) - env.vehicle.alloc @ action**2)
+        actions.append(action)
+        speeds.append([motor.rpm for motor in env.vehicle.propellers])
+        positions.append(state[:3])
+        velocities.append(state[3:6])
+        orientations.append(state[6:9])
+
+    return targets, positions, velocities, speeds, orientations, errs, alloc_errs, alloc_th, alloc_to, actions
+    
+
+
+def plot_trajectory_info(
+    targets, positions, velocities, speeds, orientations, errs, alloc_errs, alloc_th, alloc_to, actions
+):
+    targets = np.asarray(targets)
+    positions = np.asarray(positions)
+    velocities = np.asarray(velocities)
+    speeds = np.asarray(speeds)
+    orientations = np.asarray(orientations) * 180 / np.pi
+    errs = np.asarray(errs)
+    alloc_errs = np.asarray(alloc_errs)
+    alloc_th = np.asarray(alloc_th)
+    alloc_to = np.asarray(alloc_to)
+    actions = np.asarray(actions)
+
+    plt.figure(figsize=(21,7))
+    plot_grid = (2,3)
+    plt.subplot(*plot_grid,1)
+
+    plt.plot(positions[:, 0], label='x', c='r')
+    plt.plot(targets[:len(positions), 0], c='r', ls=':')
+    plt.plot(positions[:, 1], label='y', c='g')
+    plt.plot(targets[:len(positions), 1], c='g', ls=':')
+    plt.plot(positions[:, 2], label='z', c='b')
+    lines = plt.gca().lines[::2]
+    plt.ylabel('Position /m')
+    plt.twinx()
+    plt.plot(orientations[:, 0], label='roll', c='c', ls=':')
+    plt.plot(orientations[:, 1], label='pitch', c='m', ls=':')
+    plt.plot(orientations[:, 2], label='yaw', c='y', ls=':')
+    plt.ylabel('Orientation /deg')
+    plt.legend(handles=plt.gca().lines + lines, ncol=2)
+    plt.title('Position and Orientation')
+
+    plt.subplot(*plot_grid,2)
+    for i in range(actions.shape[1]):
+        l, = plt.plot(actions[:,i], label='prop %d' % i)
+    #     plt.plot(speeds[:,i], c=l.get_c())
+    lines = plt.gca().lines
+    plt.legend(handles=lines, ncol=2)
+    plt.title('Motor speeds /RPM')
+
+    plt.subplot(*plot_grid,3)
+    v_world = np.zeros_like(velocities)
+    for i, (v, o) in enumerate(zip(velocities, orientations)):
+        dcm = direction_cosine_matrix(*o)
+        v_world[i] = body_to_inertial(v, dcm)
+    for i, c, a in zip(range(3), 'rgb', 'xyz'):
+    #     plt.plot(v_world[:,i], label='Velocity %s' % a, c=c)
+        plt.plot(velocities[:,i], label='Velocity %s' % a, c=c)
+    plt.legend()
+    plt.title('Velocities')
+
+    plt.subplot(*plot_grid,4)
+    plt.title('Controller allocated dynamics')
+    l = plt.plot(alloc_th, label='Ctrl Thrust')
+    plt.ylabel('Force /N')
+    plt.twinx()
+    for i, c, a in zip(range(3), 'rgb', 'xyz'):
+        plt.plot(alloc_to[:,i], label='Ctrl Torque %s' % a, c=c)
+    plt.ylabel('Torque /Nm')
+    plt.legend(handles=plt.gca().lines + l, ncol=2)
+
+    plt.subplot(*plot_grid,5)
+    lines = plt.plot(alloc_errs[:, 0], label='Thrust err', c='b')
+    plt.ylabel('Thrust /N')
+    plt.twinx()
+    plt.plot(alloc_errs[:, 1], label='Torque x err', ls=':')
+    plt.plot(alloc_errs[:, 2], label='Torque y err', ls=':')
+    plt.plot(alloc_errs[:, 3], label='Torque z err', ls=':')
+    plt.legend(handles = plt.gca().lines + lines, ncol=2)
+    plt.ylabel('Torque /Nm')
+    plt.title('Allocation Errors')
+
+    plt.subplot(*plot_grid,6)
+    plt.plot(targets[:len(positions),0], targets[:len(positions),1], label='Prescribed traj')
+    plt.plot(positions[:,0], positions[:,1], label='Actual traj')
+    plt.gca().set_aspect('equal', 'box')
+    plt.title('XY positions /m')
+    plt.legend()
+
+    plt.tight_layout()

@@ -93,6 +93,8 @@ namespace gazebo {
 			if (action->reset()) {
 				// No need to parse dynamics if the reset flag is set. It will
 				// be executed inthe OnUpdated method.
+				this->forces = {0.0,0.0,0.0};
+				this->torques = {0.0,0.0,0.0};
 				return;
 			}
 			if (action->type() == action->DYNAMICS) {

@@ -3,62 +3,17 @@ from msgs.vector8d_pb2 import Vector8d
 from msgs.messages_pb2 import Action, State
 from gazebo_comms import GazeboCommms
 from multirotor.simulation import Multirotor
-from motor import Motor
+from multirotor.env import BaseMultirotorEnv, DynamicsMultirotorEnv
 import gym
 
-# # Following variables are for publishing on the Gazebo Vector3d protobuff topic
-# MASTER_TCP_IP   = '127.0.0.1'
-# MASTER_TCP_PORT = 11345
-# # Create UDP Publisher to communicate with Tarot_Env_Plugin
-# publisher = GazeboPublisher.GazeboPublisher(MASTER_TCP_IP, MASTER_TCP_PORT)
 
 
-class BaseOctorotor(gym.Env):
-
-
-    def __init__(self, vehicle: Multirotor=None) -> None:
-        super().__init__()
-        self.action_space = gym.spaces.Box(
-            low=-np.inf,
-            high=np.inf,
-            dtype=np.float32,
-            shape=(6,)
-        )
-        # pos, vel, att, ang vel
-        self.observation_space = gym.spaces.Box(
-            low=-np.inf,
-            high=np.inf,
-            dtype=np.float32,
-            shape=(12,)
-        )
-        self.vehicle = vehicle
-        self.state : np.ndarray = None
-
-
-    def reset(self):
-        if self.vehicle is not None:
-            return self.vehicle.reset()
-
-
-    def reward(self, state, action, nstate):
-        raise NotImplementedError
+class LocalOctorotor(DynamicsMultirotorEnv):
+    pass
 
 
 
-class LocalOctorotor(BaseOctorotor):
-
-
-    def __init__(self, vehicle: Multirotor = None) -> None:
-        super().__init__(vehicle)
-
-
-    def step(self, action: np.ndarray):
-        state = self.vehicle.step_dynamics(u=action)
-        return state, None, None, None
-
-
-
-class RemoteOctorotor(BaseOctorotor):
+class RemoteOctorotor(DynamicsMultirotorEnv):
 
     MASTER_TCP_IP   = '127.0.0.1'
     MASTER_TCP_PORT = 11345
@@ -78,7 +33,7 @@ class RemoteOctorotor(BaseOctorotor):
             self.vehicle.state = state
         except AttributeError:
             pass
-        return state, None, None, None
+        return np.asarray(state), None, None, None
 
 
     def reset(self, pos=(0,0,1), vel=(0,0,0), orientation=(0,0,0), angular_rate=(0,0,0)):

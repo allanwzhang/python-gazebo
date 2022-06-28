@@ -5,18 +5,18 @@ from multirotor.vehicle import VehicleParams, SimulationParams, PropellerParams
 from multirotor.helpers import control_allocation_matrix
 
 
-def make_trajectory(waypoints, spatial_resolution=0.01):
-    pass
 
-
-
-def get_vehicle_ability(vp: VehicleParams, sp: SimulationParams, max_tilt: float=np.pi/12):
+def get_vehicle_ability(
+    vp: VehicleParams, sp: SimulationParams, max_tilt: float=np.pi/12
+):
     alloc, alloc_inverse = control_allocation_matrix(vp)
     I_roll, I_pitch, I_yaw = vp.inertia_matrix.diagonal()
     # T = I . d_omega
     # s = 0.5 d_omega t^2
     # time to reach max tilt (s):
     # t_m = sqrt(2 s / d_omega) = t = sqrt(2 s I / T)
+    # max_torque = from propellers x geometry
+    # t_m = np.sqrt(2 * max_tilt * vp.inertia_matrix.diagonal() / max_torque)
     # max lateral thrust
     # T_l = Thrust sin(max_tilt)
     # max lateral acc
@@ -28,12 +28,34 @@ def get_vehicle_ability(vp: VehicleParams, sp: SimulationParams, max_tilt: float
 
 
 class Trajectory:
+    """
+    Iterate over waypoints for a multirotor. The trajectory class can segment a
+    list of waypoints into smaller sections and feed them to the controller when
+    the vehicle is within a radius of its current waypoint.
+    """
 
 
     def __init__(
         self, points: np.ndarray, vehicle: Multirotor=None, proximity: float=None,
         resolution: float=None    
     ):
+        """
+        Parameters
+        ----------
+        points : np.ndarray
+            A list of 3D coordinates.
+        vehicle : Multirotor, optional
+            The vehicle to track. Required if proximity is provided, by default None
+        proximity : float, optional
+            The distance from current waypoint at which to send the next waypoint,
+            by default None. If None, simply iterates over provided points.
+        resolution : float, optional
+            The segmentation of the trajectory, by default None. If provided, it
+            is the distance between intermediate points generated from the waypoints
+            provided. For e.g. resolution=2 and points=(0,0,0), (10,0,0) will
+            create intermediate points a distance 2 apart.
+        """
+        # TODO: loiter in trajectory
         self.proximity = proximity
         self.vehicle = vehicle
         self.points = np.asarray(points)
@@ -64,3 +86,5 @@ class Trajectory:
         elif self.proximity is None:
             for i in range(len(self)):
                 yield self[i]
+        else:
+            raise ValueError('Vehicle must be provided if a proximity value is given.')
