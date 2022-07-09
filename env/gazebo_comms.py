@@ -12,7 +12,12 @@ nest_asyncio.apply()
 
 
 
-class GazeboCommms: 
+class GazeboCommms:
+    """
+    The communications class for sending protobuf messages over UDP and TCP to gazebo.
+    If UDP messages are sent, the sending method waits for a response from the server.
+    The response is the state vector. TCP messages do not wait for a response.
+    """
 
     def __init__(self, host='127.0.0.1', port=11345, timeout=30):
         self.host = host
@@ -74,11 +79,14 @@ class UDPProtocol:
     
     
     async def write(self, message: google.protobuf.message.Message):
-        """ Write the motor values to the ESC and then return 
+        """
+        Write the motor values to the ESC and then return 
         the current sensor values and an exception if anything bad happend.
         
-        Args:
-            motor_vector: Vector8d object of motor values
+        Parameters
+        ----------
+        motor_vector: google.protobuf.message.Message
+            The protobuf message to write.
         """
         self.packet_received = False
         

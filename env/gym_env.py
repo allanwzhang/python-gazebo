@@ -30,7 +30,7 @@ class RemoteOctorotor(DynamicsMultirotorEnv):
         a.values[:] = action
         state, exc = self.publisher.send_UDP(a)
         try:
-            self.vehicle.state = state
+            self.vehicle.state = np.asarray(state)
         except AttributeError:
             pass
         return np.asarray(state), None, None, None
