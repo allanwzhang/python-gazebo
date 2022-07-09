@@ -4,16 +4,21 @@ package tarotPB.msgs;
 
 
 message Action {
+    optional string model_name = 1 [default = "tarot_t18"];
     enum Type {
         DYNAMICS = 0;
         SPEEDS = 1;
     }
-    optional Type type = 1 [default = DYNAMICS];
-    repeated double values = 2 [packed = true];
+    optional Type type = 2 [default = DYNAMICS];
+    // If DYNAMICS, values is a 6-vector containing fx, fy, fz, tx, ty, tz,
+    // the forces and torques acting on the vehicle.
+    // IF SPEEDS, values is a 8-vector (or however many propellers are there)
+    // with the rotational speeds.
+    repeated double values = 3 [packed = true];
     // When the reset signal is sent, the new state of the vehicle must be
     // specified.
-    optional bool reset = 3 [default = false];
-    optional State state = 4;
+    optional bool reset = 4 [default = false];
+    optional State state = 5;
 }
 
 

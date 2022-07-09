@@ -9,7 +9,6 @@ endforeach()
 
 set (msgs
   vector8d.proto
-  vector6d.proto
   messages.proto
 )
 
