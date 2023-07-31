@@ -1,7 +1,7 @@
 # Instructions to setup Ardupilot-Python-Gazebo Framework
 ## Install Ardupilot
 IQ_GNC Tutorial: [Ubuntu 18.04](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/Installing_Ardupilot.md)  
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;[Ubuntu 20.04](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/Installing_Ardupilot_20_04.md)  
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;[Ubuntu 20.04](https://github.com/Intelligent-Quads/iq_tutorials/blob/master/docs/Installing_Ardupilot_20_04.md)  
 Note: Checkout latest stable ArduCopter version (I used Copter 4.2.3)  
 
 ## Install Python-Gazebo
