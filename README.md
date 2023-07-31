@@ -100,7 +100,7 @@ On a separate console on the host:
 ```bash
 conda activate gazebo
 jupyter notebook
-# open env/Demo.ipynb
+# open env/APDemo.ipynb
 # Run different notebook sections to see everything working.
 ```
 
