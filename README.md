@@ -16,8 +16,10 @@ Follow instructions in gym-env readme to install all required parts
 From the ardupilot directory
 ```bash
 cd ArduCopter
-sim_vehicle.py -v ArduCopter -f octa --model JSON --console # may need run conda deactivate first
+sim_vehicle.py -v ArduCopter -f octa --model JSON --console
+# may need run conda deactivate first
 ```
+Note: Make sure X forwarding application is on (if running on windows os)
 ### Start Gazebo
 From python-gazebo directory
 ```bash
