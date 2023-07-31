@@ -31,7 +31,7 @@ The `build_gazebo.sh` script handles the building and installing of Gazebo and D
 
 To install, execute:
 
-	git clone -b gym-env --recurse-submodules https://git.isis.vanderbilt.edu/systemwidesafety/gazebo-testbed.git
+	git clone -b gym-env --recurse-submodules https://github.com/allanwzhang/python-gazebo.git
 	cd gazebo-testbed
 	sudo MAKE_FLAGS=-j4 ./build_gazebo.sh
 	
