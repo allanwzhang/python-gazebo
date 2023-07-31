@@ -131,7 +131,7 @@ class Octorotor_Env : public WorldPlugin
 	
 	public: void LoadVars(sdf::ElementPtr _sdf) {
 		
-		int port = 9002;
+		int port = 9003;
 		gzdbg << "ENV Binding on port " << port << "\n";
 		if (!this->Bind("127.0.0.1", port)) {
 			gzerr << "Failed to bind with 127.0.0.1:" << port <<", aborting plugin.\n";

@@ -29,7 +29,7 @@ class GazeboCommms:
         # Set up UDP transport for sending action packets
         future = self.loop.create_datagram_endpoint(
             lambda: UDPProtocol(),
-            remote_addr=(self.host, 9002)
+            remote_addr=(self.host, 9003)
         )
         self.udp_protocol: UDPProtocol = \
             self.loop.run_until_complete(future)[1]

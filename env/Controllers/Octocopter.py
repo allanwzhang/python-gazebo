@@ -157,7 +157,7 @@ class Octocopter:
         
         # Gazebo Publisher
         self.host = '127.0.0.1'
-        self.port = 9002
+        self.port = 9003
         self.loop = asyncio.get_event_loop()
         self.running = False
         self.timeout = 30
