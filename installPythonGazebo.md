@@ -83,36 +83,4 @@ If using the gazebo back-end with its GUI, run the application, setting:
 1. Display port number to 0,
 2. Unchecking "Native opengl" setting
 
-
-## Running demo
-
-**With the Gazebo back-end**: Once the above steps are complete, start the X-display server application. On the host, run
-
-```bash
-# For GUI
-gazebo worlds/test.world --verbose -u
-# Without GUI (no need for display server)
-gzserver worlds/test.world --verbose -u
-```
-
-On a separate console on the host:
-
-```bash
-conda activate gazebo
-jupyter notebook
-# open env/APDemo.ipynb
-# Run different notebook sections to see everything working.
-```
-
-## Development
-
-
-### Gazebo resources
-
-* [SDF file specification for model and world files](http://sdformat.org/spec)
-* [Gazebo tutorials](http://gazebosim.org/tutorials)
-
-
-### Repository structure
-
-TODO
+Installation complete! Go back to initial [readme](https://github.com/allanwzhang/python-gazebo).
