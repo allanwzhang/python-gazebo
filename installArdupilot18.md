@@ -50,3 +50,5 @@ Run SITL (Software In The Loop) once to set params:
 cd ~/ardupilot/ArduCopter
 sim_vehicle.py -w
 ```
+
+Taken from [IQ_GNC](https://github.com/Intelligent-Quads/iq_tutorials/edit/master/docs/Installing_Ardupilot_20_04.md)
