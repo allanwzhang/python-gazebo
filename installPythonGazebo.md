@@ -31,7 +31,7 @@ A shell script file called `build_gazebo.sh` is included in the repository. This
 
 The `build_gazebo.sh` script handles the building and installing of Gazebo and DART. Building Gazebo from source is very resource intensive. Running the script may take more than an hour to execute.
 
-To install, from the ~/path/to/python-gazebo/ execute:
+To install, from ~/path/to/python-gazebo/ execute:
 
 	sudo MAKE_FLAGS=-j4 ./build_gazebo.sh
 	
