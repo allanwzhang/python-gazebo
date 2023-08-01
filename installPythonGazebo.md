@@ -59,6 +59,22 @@ The included plugins are as follows in the gazebo/plugins folder:
 - This is a *world* plugin. It can be attached to any saved Gazebo world by altering the `.world` file.
 - This plugin is responsible for forcing the simulation to be paused on startup and stepping the simulation manually upon receiving UDP packets containing the action messages to be applied to the the octocopter. UDP packets can be sent via the python octorotor controller in the `env/` folder.
 
+Open `~/.bashrc` for editing:
+```
+gedit ~/.bashrc
+```
+
+Add these lines to end of `~/.bashrc` (the file open in the text editor):
+```
+source /path/to/python-gazebo/setup.sh
+```
+
+Save and close the text editor.
+
+Reload `~/.bashrc`:
+```
+. ~/.bashrc
+```
 
 ### Python virtual environment
 
@@ -83,4 +99,15 @@ If using the gazebo back-end with its GUI, run the application, setting:
 1. Display port number to 0,
 2. Unchecking "Native opengl" setting
 
+For further troubleshooting:
+Run this in your windows terminal
+```bash
+setx DISPLAY "127.0.0.1:0.0"
+```
+Make sure to have these permissions to your ~/.ssh/config file (if connecting through ssh)  
+```
+ForwardAgent yes  
+ForwardX11Trusted yes  
+ForwardX11 yes  
+```
 Installation complete! Go back to initial [readme](https://github.com/allanwzhang/python-gazebo).
