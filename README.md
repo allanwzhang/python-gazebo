@@ -8,7 +8,7 @@ git clone https://github.com/allanwzhang/python-gazebo.git
 cd python-gazebo
 git checkout gym-env
 ```
-Follow instructions in gym-env readme to install all required parts
+Follow the [installPythonGazebo.md](https://github.com/allanwzhang/python-gazebo/blob/main/installPythonGazebo.md) file to install all required parts (also in the gym-env branch)
 
 ## Commands to run code
 ### Start Ardupilot
