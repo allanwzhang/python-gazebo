@@ -5,6 +5,7 @@ Follow the installArdupilot.md file in this repository for your Linux version: [
 ## Install Python-Gazebo
 ```bash
 git clone https://github.com/allanwzhang/python-gazebo.git
+cd python-gazebo
 git checkout gym-env
 ```
 Follow instructions in gym-env readme to install all required parts
