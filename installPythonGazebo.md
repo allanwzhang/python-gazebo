@@ -90,8 +90,7 @@ conda activate gazebo
 
 The default environment name is `gazebo`, but it can be overwritten using the `-n NAME` flag.
 
-Additionally, download ipykernel into your gazebo environment.  
-Make sure gazebo is activated then run  
+Additionally, download ipykernel into your gazebo environment. Make sure gazebo is activated then run:  
 
 ```bash
 conda install -c anaconda ipykernel
