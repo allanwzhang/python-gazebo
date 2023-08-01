@@ -116,4 +116,4 @@ ForwardAgent yes
 ForwardX11Trusted yes  
 ForwardX11 yes  
 ```
-Installation complete! Go back to initial [readme](https://github.com/allanwzhang/python-gazebo).
+Installation complete! Go back to the initial [readme](https://github.com/allanwzhang/python-gazebo).
