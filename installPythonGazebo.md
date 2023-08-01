@@ -25,14 +25,14 @@ If development is being done on a (remote) machine using gazebo GUI over ssh:
 
 ### Installing Gazebo
 
+Note: If Gazebo is already installed, skip to Building Required Plugins  
+
 A shell script file called `build_gazebo.sh` is included in the repository. This shell script installs all of the required dependencies for DART version 6.7.0 and Gazebo version 11.5.1. DART is a physics engine that can be implemented in Gazebo in place of the default ODE physics engine and is highly recommended over the default engine. In order to use DART with Gazebo, Gazebo must be installed from source and the machine must build and install DART prior to installing Gazebo.
 
 The `build_gazebo.sh` script handles the building and installing of Gazebo and DART. Building Gazebo from source is very resource intensive. Running the script may take more than an hour to execute.
 
 To install, execute:
 
-	git clone -b gym-env --recurse-submodules https://github.com/allanwzhang/python-gazebo.git
-	cd gazebo-testbed
 	sudo MAKE_FLAGS=-j4 ./build_gazebo.sh
 	
 
