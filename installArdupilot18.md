@@ -10,7 +10,7 @@ cd ~
 sudo apt install git
 git clone https://github.com/ArduPilot/ardupilot.git
 cd ardupilot
-git checkout Copter-3.6
+git checkout Copter-4.2.3
 git submodule update --init --recursive
 ```
 
