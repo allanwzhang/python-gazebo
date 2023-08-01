@@ -29,7 +29,7 @@ From python-gazebo directory, open up env/APDemo.ipynb file and run blocks to st
 ### Control Parameters
 After all three parts are running, load Octocopter parameters from the ArduPilot console. There should be an parameters button where you can then choose to load a file. Choose simOcto.parm in the python-gazebo/env directory. You will only need to do this once (parameters should save automatically).
 ### Starting the drone
-In the console where Ardupilot is running, enter these commands after everything loads and connects (look for when a GPS is detected)
+In the console where Ardupilot is running, enter these commands after everything loads and connects. Look for these two commands to appear in the ArduPilot console: IMU0 is using GPS, IMU1 is using GPS, then run these commands:
 ```bash
 mode guided
 arm throttle
